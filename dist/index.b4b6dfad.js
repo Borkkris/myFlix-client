@@ -27092,53 +27092,53 @@ class MainView extends (0, _reactDefault.default).Component {
     }
     componentDidMount() {
         (0, _axiosDefault.default).get("https://app-my-flix.herokuapp.com/movies").then((response)=>{
-            then.setState({
-                movies: Response.data
+            this.setState({
+                movies: response.data
             });
         }).catch((error)=>{
             console.log(error);
         });
     }
-    setSelectedMovie(newSelectedMovie1) {
+    setSelectedMovie(newSelectedMovie) {
         this.setState({
-            selectedMovie: newSelectedMovie1
+            selectedMovie: newSelectedMovie
         });
     }
     // controls what the component displays or visual representation of the component
     render() {
-        const { movies , selectedMovie  } = this.state; //info from the parent going to the child
+        const { movies , selectedMovie  } = this.state;
         if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
             className: "main-view",
-            children: "The list is empty!"
+            children: "coming soon..."
         }, void 0, false, {
             fileName: "src/Components/main-view/main-view.jsx",
-            lineNumber: 43,
-            columnNumber: 16
+            lineNumber: 42,
+            columnNumber: 41
         }, this);
         return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
             className: "main-view",
             children: selectedMovie ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
                 movie: selectedMovie,
-                onBackClick: (newSelectedMovie1)=>{
-                    this.setSelectedMovie(newSelectedMovie1);
+                onBackClick: (newSelectedMovie)=>{
+                    this.setSelectedMovie(newSelectedMovie);
                 }
             }, void 0, false, {
                 fileName: "src/Components/main-view/main-view.jsx",
                 lineNumber: 47,
-                columnNumber: 34
+                columnNumber: 19
             }, this) : movies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
                     movie: movie,
-                    onMovieClick: (movie)=>{
+                    onMovieClick: (newSelectedMovie)=>{
                         this.setSelectedMovie(newSelectedMovie);
                     }
                 }, movie._id, false, {
                     fileName: "src/Components/main-view/main-view.jsx",
                     lineNumber: 49,
-                    columnNumber: 17
+                    columnNumber: 21
                 }, this))
         }, void 0, false, {
             fileName: "src/Components/main-view/main-view.jsx",
-            lineNumber: 46,
+            lineNumber: 45,
             columnNumber: 13
         }, this);
     }

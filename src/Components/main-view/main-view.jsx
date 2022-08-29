@@ -17,16 +17,16 @@ export class MainView extends React.Component { //this generates the mainView co
         } 
     }
 
-    componentDidMount() {
+    componentDidMount(){
         axios.get('https://app-my-flix.herokuapp.com/movies')
-            .then(response => {
-                then.setState({
-                    movies: Response.data
-                });
-            })
-            .catch(error => {
-                console.log(error);
+        .then(response => {
+            this.setState({
+            movies: response.data
             });
+        })
+        .catch(error => {
+        console.log(error);
+        });
     }
 
     setSelectedMovie(newSelectedMovie) {
@@ -37,17 +37,17 @@ export class MainView extends React.Component { //this generates the mainView co
 
     // controls what the component displays or visual representation of the component
     render() {
-        const { movies, selectedMovie } = this.state; //info from the parent going to the child
+        const { movies, selectedMovie } = this.state;
 
-        if (movies.length === 0) 
-        return <div className="main-view">The list is empty!</div>;
+        if (movies.length === 0) return <div className="main-view">coming soon...</div>;
 
         return (
             <div className="main-view">
-                {selectedMovie ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => {this.setSelectedMovie (newSelectedMovie); }}/>
-                :movies.map(movie => (
-                <MovieCard key={movie._id} movie={movie} onMovieClick={(movie) => {
-                    this.setSelectedMovie (newSelectedMovie) }}/>))
+                {selectedMovie
+                ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }}/>
+                : movies.map(movie => (
+                    <MovieCard key={movie._id} movie={movie} onMovieClick={(newSelectedMovie) => { this.setSelectedMovie(newSelectedMovie) }}/>
+                ))
                 }
             </div>
         );
