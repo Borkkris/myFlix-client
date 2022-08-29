@@ -16,7 +16,7 @@ export class MainView extends React.Component { //this generates the mainView co
             selectedMovie: null
         } 
     }
-
+    //GET all movies
     componentDidMount(){
         axios.get('https://app-my-flix.herokuapp.com/movies')
         .then(response => {

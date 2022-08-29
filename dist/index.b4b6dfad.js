@@ -27090,16 +27090,18 @@ class MainView extends (0, _reactDefault.default).Component {
             selectedMovie: null
         };
     }
-    componentDidMount() {
-        (0, _axiosDefault.default).get("https://app-my-flix.herokuapp.com/movies").then((response)=>{
+    //GET all movies
+    /*componentDidMount(){
+        axios.get('https://app-my-flix.herokuapp.com/movies')
+        .then(response => {
             this.setState({
-                movies: response.data
+            movies: response.data
             });
-        }).catch((error)=>{
-            console.log(error);
+        })
+        .catch(error => {
+        console.log(error);
         });
-    }
-    setSelectedMovie(newSelectedMovie) {
+    }*/ setSelectedMovie(newSelectedMovie) {
         this.setState({
             selectedMovie: newSelectedMovie
         });
