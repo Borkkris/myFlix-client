@@ -1,25 +1,32 @@
-// imports react into the file
+// imports react into the file. Its important for creating components
 import React from 'react';
+import axios from 'axios';
 
 
-//importing component movierCard
+//importing component MovieCard, MovieView...
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 
 // export makes the ne component usable by others
-export class MainView extends React.Component { //uses generic React component Template
-    
-
-    constructor(){ //If I hadn’t included constructor, the component would still be initialized in the default manner
-        super(); //initializes your component’s state
+export class MainView extends React.Component { //this generates the mainView component
+    constructor(){ //The method that React uses to actually create the component in-memory + starting point of any class component
+        super(); //initializes your component’s state + mendatory when using constructor function + will call the parent React.Component’s constructor, which will give my class the actual React component’s features
         this.state = {
-            movies: [
-                { _id: 1, Title: 'Inception', Description: 'desc1...', ImagePath: '...'},
-                { _id: 2, Title: 'The Shawshank Redemption', Description: 'desc2...', ImagePath: '...'},
-                { _id: 3, Title: 'Gladiator', Description: 'desc3...', ImagePath: '...'}
-            ],
+            movies: [],
             selectedMovie: null
         } 
+    }
+
+    componentDidMount() {
+        axios.get('https://app-my-flix.herokuapp.com/movies')
+            .then(response => {
+                then.setState({
+                    movies: Response.data
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     setSelectedMovie(newSelectedMovie) {
@@ -28,18 +35,19 @@ export class MainView extends React.Component { //uses generic React component T
         });
     }
 
-    // controls what the component displays
+    // controls what the component displays or visual representation of the component
     render() {
         const { movies, selectedMovie } = this.state; //info from the parent going to the child
 
-        if (movies.length === 0) return <div className="main-view">The list is empty!</div>;
+        if (movies.length === 0) 
+        return <div className="main-view">The list is empty!</div>;
 
         return (
             <div className="main-view">
                 {selectedMovie ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => {this.setSelectedMovie (newSelectedMovie); }}/>
                 :movies.map(movie => (
                 <MovieCard key={movie._id} movie={movie} onMovieClick={(movie) => {
-                    this.setSelectedMovie (movie) }}/>))
+                    this.setSelectedMovie (newSelectedMovie) }}/>))
                 }
             </div>
         );
