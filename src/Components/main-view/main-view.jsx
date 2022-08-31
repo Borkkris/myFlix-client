@@ -3,6 +3,7 @@ import axios from 'axios';// imports axios into the file. Its important to do Aj
 
 
 //importing component MovieCard, MovieView...
+import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '..//login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
@@ -37,6 +38,13 @@ export class MainView extends React.Component { //this generates the mainView co
             selectedMovie: newSelectedMovie
         });
     }
+
+    //When a user successfully registers
+    onRegistration(register) {
+    this.setState({
+      register,
+    });
+  }
     /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
     /*This method will update the user state of the MainView component and will be called when the user has successfully logged in*/
     onLoggedIn(user) {
@@ -47,7 +55,9 @@ export class MainView extends React.Component { //this generates the mainView co
 
     // controls what the component displays or visual representation of the component
     render() {
-        const { movies, selectedMovie, user} = this.state;
+        const { movies, selectedMovie, user, register} = this.state;
+
+        if (!register) return <RegistrationView onRegistration={register => this.onRegistration(register)} />
 
         /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
         if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
