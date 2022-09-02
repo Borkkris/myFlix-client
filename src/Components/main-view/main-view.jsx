@@ -1,5 +1,7 @@
 import React from 'react';// imports react into the file. Its important for creating components
 import axios from 'axios';// imports axios into the file. Its important to do Ajax requests
+import Row  from 'react-bootstrap/Row';
+import { Container, Col, Row, Navbar, Nav } from 'react-bootstrap';
 
 
 //importing component MovieCard, MovieView...
@@ -9,7 +11,8 @@ import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 
 // export makes the ne component usable by others
-export class MainView extends React.Component { //this generates the mainView component
+class MainView extends React.Component { //this generates the mainView component
+    
     constructor(){ //The method that React uses to actually create the component in-memory + starting point of any class component
         super(); //initializes your component’s state + mendatory when using constructor function + will call the parent React.Component’s constructor, which will give my class the actual React component’s features
         this.state = {
@@ -65,15 +68,35 @@ export class MainView extends React.Component { //this generates the mainView co
         if (movies.length === 0) return <div className="main-view">loading...</div>;
 
         return (
-            <div className="main-view">
-                {/*If the state of `selectedMovie` is not null, that selected movie will be returned otherwise, all *movies will be returned*/}
-                {selectedMovie
-                ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }}/>
-                : movies.map(movie => (
-                    <MovieCard key={movie._id} movie={movie} onMovieClick={(newSelectedMovie) => { this.setSelectedMovie(newSelectedMovie) }}/>
-                ))
-                }
-            </div>
+            <Container>
+                <Navbar bg="light" expand="lg">
+                    <Container fluid>
+                        <Navbar.Brand href="#home">myFlix</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="me-auto">
+                                <Nav.Link href="#logout">Logout</Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
+
+                <Row className="main-view justify-content-md-center">
+                    {/*If the state of `selectedMovie` is not null, that selected movie will be returned otherwise, all *movies will be returned*/}
+                    {selectedMovie ? (
+                    
+                        <Col md={8}>
+                            <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }}/>
+                        </Col>
+                    )
+                    :movies.map(movie => (
+                            <Col md={3}>
+                            <MovieCard key={movie._id} movie={movie} onMovieClick={(newSelectedMovie) => { this.setSelectedMovie(newSelectedMovie) }}/>
+                            </Col>
+                        ))
+                    }
+                </Row>
+            </Container>
         );
     }
 }
