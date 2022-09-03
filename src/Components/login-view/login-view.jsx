@@ -2,6 +2,7 @@ import React, { useState } from 'react'; //useState hook used without writing a 
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import { Form, Button, Card, CardGroup, Container, Col, Row, Navbar, Nav } from 'react-bootstrap';
+import axios from 'axios';
 
 export function LoginView (props) {
     //call the useState-method imported from React with an empty string / This is the initial value of your login variable
@@ -9,11 +10,19 @@ export function LoginView (props) {
     const [ password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
-        e.preventDefault(); //prevents the default behavior: that the page will refresh/reload when user clicks on button and submits a form for example
-        console.log(username, password); //logs username and password into the console
+        e.preventDefault();
         /* Send a request to the server for authentication */
-        /* then call props.onLoggedIn(username) */
-        props.onLoggedIn(username);
+        axios.post('YOUR_API_URL/login', {
+            Username: username,
+            Password: password
+        })
+        .then(response => {
+        const data = response.data;
+        props.onLoggedIn(data);
+        })
+        .catch(e => {
+        console.log('no such user')
+        });
     };
 
     return (
