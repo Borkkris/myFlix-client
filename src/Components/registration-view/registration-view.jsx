@@ -68,7 +68,7 @@ export function RegistrationView(props) {
                 console.log(data);
                 console.log('new user registration')
                 alert("Registration successful, please login!");
-                window.open("https://app-my-flix.herokuapp.com/login", "_self"); //TUTOR: not opening the login / the second argument '_self' is necessary so that the page will open in the current tab
+                window.open("/", "_self"); //TUTOR: not opening the login / the second argument '_self' is necessary so that the page will open in the current tab
             })
             .catch((response) => {
                 console.error(response);
