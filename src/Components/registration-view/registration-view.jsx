@@ -6,17 +6,25 @@ import axios from "axios";
 
 
 export function RegistrationView(props) {
+    const [ name, setName] = useState('');
     const [ username, setUsername] = useState('');
     const [ password, setPassword] = useState('');
     const [ email, setEmail] = useState('');
-    const [ birthdate, setBirthdate] = useState('');
+    const [ birthday, setBirthday] = useState('');
 
+    const [ nameErr, setNameErr] = useState('');
     const [ usernameErr, setUsernameErr] = useState('');
     const [ passwordErr, setPasswordErr] = useState('');
     const [ emailErr, setEmailErr] = useState('');
 
     const validate = () => {
         let isReq = true;
+
+        if(!name) {
+            setNameErr('Name Required');
+            isReq = false;
+        }
+
         if(!username) {
             setUsernameErr('Username Required');
             isReq = false;
@@ -24,6 +32,7 @@ export function RegistrationView(props) {
                 setUsernameErr('Username must be at least 2 characters long');
                 isReq = false;
               }
+
         if(!password) {
             setPasswordErr('Password Required');
             isReq = false;
@@ -31,13 +40,15 @@ export function RegistrationView(props) {
                 setPasswordErr('must be at least 3 characters long');
                 isReq = false;
               }
+
         if(!email) {
-            setEmailErr('Email required')
+            setEmailErr('Email Required')
             isReq = false;
             } else if(email.indexOf("@") === -1){
                 setEmailErr('Email is invalid')
                 isReq = false;
             }
+
         return isReq;
     }
 
@@ -46,10 +57,11 @@ export function RegistrationView(props) {
         const isReq = validate();
         if (isReq) {
             axios.post("https://ap-myflix.herokuapp.com/users", {
+                Name: name,
                 Username: username,
                 Password: password,
                 Email: email,
-                Birthdate: birthdate,
+                Birthday: birthday,
             })
             .then((response) => {
                 const data = response.data;
@@ -79,7 +91,7 @@ export function RegistrationView(props) {
                 </Container>
             </Navbar>
             
-            <Row>
+            <Row className="mt-5">
                 <Col md={12}>
                     <CardGroup>
                         <Card>
@@ -96,6 +108,21 @@ export function RegistrationView(props) {
                                             />
 
                                             {usernameErr && <p>{usernameErr}</p>}
+
+                                    </Form.Group>
+
+                                    <br />
+
+                                    <Form.Group>
+                                        {/* <Form.Label>First name:</Form.Label> */}
+                                        <Form.Control
+                                            type='text' 
+                                            value={name} 
+                                            onChange={e => setName(e.target.value)} 
+                                            placeholder="Name"
+                                            />
+
+                                            {nameErr && <p>{nameErr}</p>}
 
                                     </Form.Group>
 
@@ -135,8 +162,8 @@ export function RegistrationView(props) {
                                         <Form.Label>Birthday:</Form.Label>
                                         <Form.Control
                                             type='date' 
-                                            value={birthdate} 
-                                            onChange={e => setBirthdate(e.target.value)} 
+                                            value={birthday} 
+                                            onChange={e => setBirthday(e.target.value)} 
                                             />
                                     </Form.Group>
 
