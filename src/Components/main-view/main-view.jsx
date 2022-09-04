@@ -48,12 +48,35 @@ class MainView extends React.Component { //this generates the mainView component
       register,
     });
   }
-    /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
-    /*This method will update the user state of the MainView component and will be called when the user has successfully logged in*/
-    onLoggedIn(user) {
+
+    onLoggedIn(authData) { // When a user logs in, the props onLoggedIn(data) is passed to the LoginView and triggers the function onLoggedIn(authData) in the MainView. This updates the state with the logged in authData.
+
+        console.log(authData); // authData sent to the console (TUTOR: not working)
         this.setState({
-            user
+            user:authData.user.Username // users Username is saved in the user state
+        });
+        /*The auth information received from the handleSubmit method, 
+        the token and the user, is saved in localStorage*/
+        localStorage.setItem('token', authData.token);
+        localStorage.setitem('user', authData.user.Username);
+
+        /*this.getMovies(authData) is called and gets the
+         movies from your API once the user is logged in*/
+        this.getMovies(authData.token);
+    }
+
+    getMovies(token) {
+        axios.get('https://app-my-flix.herokuapp.com/movies', {
+            headers: { Authorization: `Bearer ${token}`} // By passing bearer authorization in the header of your HTTP requests, you can make authenticated requests to your API
         })
+        .then(response => {
+            this.setState({
+                movies: response.data
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     // controls what the component displays or visual representation of the component
