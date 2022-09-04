@@ -68,7 +68,7 @@ export function RegistrationView(props) {
                 console.log(data);
                 console.log('new user registration')
                 alert("Registration successful, please login!");
-                window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+                window.open("https://app-my-flix.herokuapp.com/login", "_self"); //TUTOR: not opening the login / the second argument '_self' is necessary so that the page will open in the current tab
             })
             .catch((response) => {
                 console.error(response);
@@ -169,7 +169,14 @@ export function RegistrationView(props) {
 
                                     <br />
 
-                                    <Button  type='primary' onClick={handleSubmit}>Submit</Button>
+                                    <Button
+                                    className="register"
+                                    variant="primary"
+                                    type="submit"
+                                    onClick={handleSubmit}
+                                    >
+                                    Register
+                                    </Button>
                                 </Form>
                             </Card.Body>
                         </Card>

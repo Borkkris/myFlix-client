@@ -37611,7 +37611,7 @@ function RegistrationView(props) {
             console.log(data);
             console.log("new user registration");
             alert("Registration successful, please login!");
-            window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+            window.open("https://app-my-flix.herokuapp.com/login", "_self"); //TUTOR: not opening the login / the second argument '_self' is necessary so that the page will open in the current tab
         }).catch((response)=>{
             console.error(response);
             alert("unable to register");
@@ -37840,9 +37840,11 @@ function RegistrationView(props) {
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
-                                                type: "primary",
+                                                className: "register",
+                                                variant: "primary",
+                                                type: "submit",
                                                 onClick: handleSubmit,
-                                                children: "Submit"
+                                                children: "Register"
                                             }, void 0, false, {
                                                 fileName: "src/Components/registration-view/registration-view.jsx",
                                                 lineNumber: 172,
