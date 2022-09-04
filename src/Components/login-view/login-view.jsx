@@ -8,21 +8,48 @@ export function LoginView (props) {
     //call the useState-method imported from React with an empty string / This is the initial value of your login variable
     const [ username, setUsername ] = useState('');
     const [ password, setPassword] = useState('');
+    const [ usernameErr, setUsernameErr] = useState('');
+    const [ passwordErr, setPasswordErr] = useState('');
+
+    //validate user inputs
+    const validate = () => {
+        let isReq = true;
+        if(!username) {
+            setUsernameErr('Username Required');
+            isReq = false;
+            } else if(username.length < 2){
+                setUsernameErr('Username must be at least 2 characters long');
+                isReq = false;
+              }
+        if(!password) {
+            setPasswordErr('Password Required');
+            isReq = false;
+            } else if(password.length < 3){
+                setPasswordErr('must be at least 3 characters long');
+                isReq = false;
+              }
+
+                return isReq;
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const isReq = validate();
+        if (isReq) {
         /* Send a request to the server for authentication */
-        axios.post('https://app-my-flix.herokuapp.com/login', { // TUTOR: not working
-            Username: username,
-            Password: password
-        })
-        .then(response => {
-        const data = response.data;
-        props.onLoggedIn(data);
-        })
-        .catch(e => {
-        console.log('no such user')
-        });
+            axios.post('https://app-my-flix.herokuapp.com/login', { // TUTOR: not working
+                Username: username,
+                Password: password
+            })
+            .then(response => {
+            const data = response.data;
+            props.onLoggedIn(data);
+            })
+            .catch(e => {
+            console.log('no such user')
+            });
+        }
+    
     };
 
     return (
@@ -47,13 +74,17 @@ export function LoginView (props) {
                             <Card.Title>Login</Card.Title>
                                 <Form>
                                     <Form.Group controlId="formUsername">
-                                        <Form.Label>Username:</Form.Label>
-                                        <Form.Control type="text" onChange={e => setUsername(e.target.value)} />
-                                    </Form.Group>
+                                        <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
+                                        
+                                            {usernameErr && <p>{usernameErr}</p>}
 
+                                    </Form.Group>
+                                    <br />
                                     <Form.Group controlId="formPassword">
-                                        <Form.Label>Password:</Form.Label>
-                                        <Form.Control type="password" onChange={e => setPassword(e.target.value)} />
+                                        <Form.Control type="password" placeholder="Password" vslue={password} onChange={e => setPassword(e.target.value)} />
+
+                                            {passwordErr && <p>{passwordErr}</p>}
+
                                     </Form.Group>
                                     <br />
                                     <Button variant="primary" type="submit" onClick={handleSubmit}>

@@ -21,48 +21,15 @@ class MainView extends React.Component { //this generates the mainView component
             user: null //The user property is initialized to null in the state (default is logged out). When the app is first run or when a user has logged out, there is no user that is logged in, hence setting the user to null.
         } 
     }
-    //GET all movies
     // code executed right after the component is added to the DOM.
     componentDidMount(){
-        axios.get('https://app-my-flix.herokuapp.com/movies')
-        .then(response => {
+        let accessToken = localStorage.getItem('token'); //  et the value of the token from localStorage
+        if (accessToken !== null) {
             this.setState({
-            movies: response.data
+                user:localStorage.getItem('user')
             });
-        })
-        .catch(error => {
-        console.log(error);
-        });
-    }
-
-    /*When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
-    setSelectedMovie(newSelectedMovie) {
-        this.setState({
-            selectedMovie: newSelectedMovie
-        });
-    }
-
-    //When a user successfully registers
-    onRegistration(register) {
-    this.setState({
-      register,
-    });
-  }
-
-    onLoggedIn(authData) { // When a user logs in, the props onLoggedIn(data) is passed to the LoginView and triggers the function onLoggedIn(authData) in the MainView. This updates the state with the logged in authData.
-
-        console.log(authData); // authData sent to the console (TUTOR: not working)
-        this.setState({
-            user:authData.user.Username // users Username is saved in the user state
-        });
-        /*The auth information received from the handleSubmit method, 
-        the token and the user, is saved in localStorage*/
-        localStorage.setItem('token', authData.token);
-        localStorage.setitem('user', authData.user.Username);
-
-        /*this.getMovies(authData) is called and gets the
-         movies from your API once the user is logged in*/
-        this.getMovies(authData.token);
+            this.getMovies(accessToken);
+        }
     }
 
     getMovies(token) {
@@ -76,6 +43,44 @@ class MainView extends React.Component { //this generates the mainView component
         })
         .catch(function (error) {
             console.log(error);
+        });
+    }
+
+    /*When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
+    setSelectedMovie(newSelectedMovie) {
+        this.setState({
+            selectedMovie: newSelectedMovie
+        });
+    }
+
+    //When a user successfully registers
+    onRegistration(register) {
+        this.setState({
+        register,
+        });
+    }
+
+    onLoggedIn(authData) { // When a user logs in, the props onLoggedIn(data) is passed to the LoginView and triggers the function onLoggedIn(authData) in the MainView. This updates the state with the logged in authData.
+
+        console.log(authData); // authData sent to the console (TUTOR: not working)
+        this.setState({
+            user:authData.user.Username // users Username is saved in the user state
+        });
+        /*The auth information received from the handleSubmit method, 
+        the token and the user, is saved in localStorage*/
+        localStorage.setItem('token', authData.token);
+        localStorage.setItem('user', authData.user.Username);
+
+        /*this.getMovies(authData) is called and gets the
+         movies from your API once the user is logged in*/
+        this.getMovies(authData.token);
+    }
+
+    onLoggedOut() {
+        localStorage.removeItem('token')
+        localStorage-removeItem('user');
+        this.setState({
+            user:null,
         });
     }
 
@@ -98,11 +103,14 @@ class MainView extends React.Component { //this generates the mainView component
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="me-auto">
-                                <Nav.Link href="#logout">Logout</Nav.Link>
+                                <Nav.Link onClick={() => { this.onLoggedOut()}}>Logout</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
+            
+                {/* logout Button */}
+                {/* <button onClick={() => { this.onLoggedOut() }}>Logout</button> */}
 
                 <Row className="main-view justify-content-md-center">
                     {/*If the state of `selectedMovie` is not null, that selected movie will be returned otherwise, all *movies will be returned*/}

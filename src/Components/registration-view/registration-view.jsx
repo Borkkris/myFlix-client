@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import emailPropType from 'email-prop-type';
 import { Form, Button, Card, CardGroup, Container, Col, Row, Navbar, Nav } from 'react-bootstrap';
+import axios from "axios";
 
 
 export function RegistrationView(props) {
@@ -10,12 +11,59 @@ export function RegistrationView(props) {
     const [ email, setEmail] = useState('');
     const [ birthdate, setBirthdate] = useState('');
 
+    const [ usernameErr, setUsernameErr] = useState('');
+    const [ passwordErr, setPasswordErr] = useState('');
+    const [ emailErr, setEmailErr] = useState('');
+
+    const validate = () => {
+        let isReq = true;
+        if(!username) {
+            setUsernameErr('Username Required');
+            isReq = false;
+            } else if(username.length < 2){
+                setUsernameErr('Username must be at least 2 characters long');
+                isReq = false;
+              }
+        if(!password) {
+            setPasswordErr('Password Required');
+            isReq = false;
+            } else if(password.length < 3){
+                setPasswordErr('must be at least 3 characters long');
+                isReq = false;
+              }
+        if(!email) {
+            setEmailErr('Email required')
+            isReq = false;
+            } else if(email.indexOf("@") === -1){
+                setEmailErr('Email is invalid')
+                isReq = false;
+            }
+        return isReq;
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(username, password, email, birthdate);
-
-        props.onRegistration(username);
-    }
+        const isReq = validate();
+        if (isReq) {
+            axios.post("https://ap-myflix.herokuapp.com/users", {
+                Username: username,
+                Password: password,
+                Email: email,
+                Birthdate: birthdate,
+            })
+            .then((response) => {
+                const data = response.data;
+                console.log(data);
+                console.log('new user registration')
+                alert("Registration successful, please login!");
+                window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+            })
+            .catch((response) => {
+                console.error(response);
+                alert("unable to register");
+            });
+        }
+    };
 
     return (
         <Container>
@@ -44,9 +92,11 @@ export function RegistrationView(props) {
                                             type='text' 
                                             value={username} 
                                             onChange={e => setUsername(e.target.value)} 
-                                            required
                                             placeholder="Username"
                                             />
+
+                                            {usernameErr && <p>{usernameErr}</p>}
+
                                     </Form.Group>
 
                                     <br />
@@ -57,10 +107,11 @@ export function RegistrationView(props) {
                                             type='password' 
                                             value={password} 
                                             onChange={e => setPassword(e.target.value)}
-                                            required 
-                                            minLength="6"
                                             placeholder="New Password"
                                             />
+
+                                            {passwordErr && <p>{passwordErr}</p>}
+
                                     </Form.Group>
 
                                     <br />
@@ -71,9 +122,11 @@ export function RegistrationView(props) {
                                             type='email' 
                                             value={email} 
                                             onChange={e => setEmail(e.target.value)} 
-                                            required
                                             placeholder="Email"
                                             />
+
+                                           {emailErr && <p>{emailErr}</p>}
+
                                     </Form.Group>
 
                                     <br />
@@ -84,7 +137,6 @@ export function RegistrationView(props) {
                                             type='date' 
                                             value={birthdate} 
                                             onChange={e => setBirthdate(e.target.value)} 
-                                            required
                                             />
                                     </Form.Group>
 
