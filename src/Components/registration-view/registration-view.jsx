@@ -3,27 +3,23 @@ import PropTypes from 'prop-types';
 import emailPropType from 'email-prop-type';
 import { Form, Button, Card, CardGroup, Container, Col, Row, Navbar, Nav } from 'react-bootstrap';
 import axios from "axios";
+import { Link } from 'react-router-dom';
+
+import './registration-view.scss'
 
 
 export function RegistrationView(props) {
-    const [ name, setName] = useState('');
     const [ username, setUsername] = useState('');
     const [ password, setPassword] = useState('');
     const [ email, setEmail] = useState('');
     const [ birthday, setBirthday] = useState('');
 
-    const [ nameErr, setNameErr] = useState('');
     const [ usernameErr, setUsernameErr] = useState('');
     const [ passwordErr, setPasswordErr] = useState('');
     const [ emailErr, setEmailErr] = useState('');
 
     const validate = () => {
         let isReq = true;
-
-        if(!name) {
-            setNameErr('Name Required');
-            isReq = false;
-        }
 
         if(!username) {
             setUsernameErr('Username Required');
@@ -56,23 +52,22 @@ export function RegistrationView(props) {
         e.preventDefault();
         const isReq = validate();
         if (isReq) {
-            axios.post("https://ap-myflix.herokuapp.com/users", {
-                Name: name,
+            axios.post('https://app-my-flix.herokuapp.com/users', {
                 Username: username,
                 Password: password,
                 Email: email,
                 Birthday: birthday,
             })
-            .then((response) => {
+            .then(response => {
                 const data = response.data;
                 console.log(data);
                 console.log('new user registration')
-                alert("Registration successful, please login!");
-                window.open("/", "_self"); //TUTOR: not opening the login / the second argument '_self' is necessary so that the page will open in the current tab
+                alert('Registration successful, please login!');
+                window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
             })
-            .catch((response) => {
-                console.error(response);
-                alert("unable to register");
+            .catch(e => {
+                console.log('error registering a user')
+                alert('unable to register');
             });
         }
     };
@@ -85,7 +80,7 @@ export function RegistrationView(props) {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="#login">Login</Nav.Link>
+                            <Nav.Link to="/login">Login</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
@@ -108,21 +103,6 @@ export function RegistrationView(props) {
                                             />
 
                                             {usernameErr && <p>{usernameErr}</p>}
-
-                                    </Form.Group>
-
-                                    <br />
-
-                                    <Form.Group>
-                                        {/* <Form.Label>First name:</Form.Label> */}
-                                        <Form.Control
-                                            type='text' 
-                                            value={name} 
-                                            onChange={e => setName(e.target.value)} 
-                                            placeholder="Name"
-                                            />
-
-                                            {nameErr && <p>{nameErr}</p>}
 
                                     </Form.Group>
 
@@ -168,7 +148,6 @@ export function RegistrationView(props) {
                                     </Form.Group>
 
                                     <br />
-
                                     <Button
                                     className="register"
                                     variant="primary"
@@ -177,6 +156,14 @@ export function RegistrationView(props) {
                                     >
                                     Register
                                     </Button>
+
+                                    <Link to="/login">
+                                        <Button 
+                                            className="login"
+                                            variant="primary">
+                                            Sign in
+                                        </Button>
+                                    </Link>
                                 </Form>
                             </Card.Body>
                         </Card>

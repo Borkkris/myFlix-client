@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import { Form, Button, Card, CardGroup, Container, Col, Row, Navbar, Nav } from 'react-bootstrap';
 import axios from 'axios';
+// import { Menubar } from '../NavBar/navbar';
 
 export function LoginView (props) {
     //call the useState-method imported from React with an empty string / This is the initial value of your login variable
@@ -24,8 +25,8 @@ export function LoginView (props) {
         if(!password) {
             setPasswordErr('Password Required');
             isReq = false;
-            } else if(password.length < 3){
-                setPasswordErr('must be at least 3 characters long');
+            } else if(password.length < 5){
+                setPasswordErr('must be at least 5 characters long');
                 isReq = false;
               }
 
@@ -54,17 +55,7 @@ export function LoginView (props) {
 
     return (
         <Container>
-            <Navbar bg="light" expand="lg">
-                <Container fluid>
-                    <Navbar.Brand href="#home">myFlix</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#register">Register</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+            {/* <Menubar user={null} /> */}
             
             <Row>
                 <Col>
