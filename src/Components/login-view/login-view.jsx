@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import { Form, Button, Card, CardGroup, Container, Col, Row, Navbar, Nav } from 'react-bootstrap';
 import axios from 'axios';
-// import { Menubar } from '../NavBar/navbar';
+import { Menubar } from '../NavBar/navbar';
 
 export function LoginView (props) {
     //call the useState-method imported from React with an empty string / This is the initial value of your login variable
@@ -55,7 +55,7 @@ export function LoginView (props) {
 
     return (
         <Container>
-            {/* <Menubar user={null} /> */}
+            <Menubar user={null} />
             
             <Row>
                 <Col>

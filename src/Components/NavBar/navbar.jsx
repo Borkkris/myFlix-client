@@ -23,7 +23,7 @@ export function Menubar({user}) {
 
     return (
 
-    <Navbar className="main-nav" sticky="top" bg="darfk" expand="lg" variant="dark">
+    <Navbar className="main-nav" sticky="top" bg="dark" expand="lg" variant="dark">
         <Container>
             <Navbar.Brand className="navbar-logo" href="/">myFlix</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -37,10 +37,10 @@ export function Menubar({user}) {
                         <Button variant="link" onClick= {() => { this.onLoggedOut() }}>Logout</Button>
                     )}
                     {isAuth() && (
-                        <Nav.Link href="/">Sign-in</Nav.Link>
+                        <Nav.Link href="/">Sign in</Nav.Link>
                     )}
                     {isAuth() && (
-                        <Nav.Link href="/register">Sign-up</Nav.Link>
+                        <Nav.Link href="/register">Sign up</Nav.Link>
                     )}
                 </Nav>
             </Navbar.Collapse>
