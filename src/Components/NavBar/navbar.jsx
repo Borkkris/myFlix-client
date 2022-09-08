@@ -37,12 +37,16 @@ export function Menubar() {
                     {isAuth() && (
                         <Nav.Link as={Link} to={`/users/${user}`}>{user}</Nav.Link>
                     )}
+                    {isAuth() && (
+                        <Nav.Link href='/'>Movies</Nav.Link>
+                    )}
                     {!isAuth() && (
                         <Nav.Link href='/'>Sign in</Nav.Link>
                     )}
                     {!isAuth() && (
                         <Nav.Link href='/register'>Sign up</Nav.Link>
                     )}
+                    <br />
                     {isAuth() && (
                         <Nav.Link onClick= {handleLogOut}>Logout</Nav.Link>
                     )}

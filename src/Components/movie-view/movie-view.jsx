@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Card, } from 'react-bootstrap';
+
+import './movie-view.scss';
 
 export class MovieView extends React.Component {
 
@@ -8,31 +10,40 @@ export class MovieView extends React.Component {
         const { movie, onBackClick, } = this.props;
 
         return (
-
-            <div className='movie-view'>
-                <div className='movie-poster'>
-                    <img crossOrigin='anonymous' src={movie.ImagePath} />
-                </div>
-                
-                <div className='movie-title'>
-                    <span className='label'>Title:</span>
-                    <span className='value'>{movie.Title}</span>
-                </div>
-
-                <div className='movie-description'>
-                    <span className='label'>Description:</span>
-                    <span className='value'>{movie.Description}</span>
-                </div>
-                <Link to={`/directors/${movie.Director.Name}`}>
-                    <Button variant='link'>Director</Button>
-                </Link>
-
-                <Link to={`/genres/${movie.Genre.Name}`}>
-                    <Button variant='link'>Genre</Button>
-                </Link>
-
-                <button onClick={() => { onBackClick() }}>Back</button>
-            </div>    
+            <Card className="movie-view">
+                <Card.Header>
+                    <Card.Img variant="top" src={movie.ImagePath} />
+                </Card.Header>
+                <Card.Body className="movie-view-title">
+                    <h1>{movie.Title}</h1>
+                </Card.Body>
+                <Card.Body>
+                    <h4>Genre</h4>
+                    <Link to={`/genres/${movie.Genre.Name}`}>
+                        <h4 className="genre-link link">{movie.Genre.Name}</h4>
+                    </Link>
+                </Card.Body>
+                <Card.Body>
+                    <h4>Director</h4>
+                    <Link to={`/directors/${movie.Director.Name}`}>
+                        <h4 className="director-link link">{movie.Director.Name}</h4>
+                    </Link>
+                </Card.Body>
+                <Card.Body>
+                    <h4>Description:</h4>
+                    {movie.Description}
+                </Card.Body>
+                <Card.Footer>
+                    <Button
+                        className="movie-view-button"
+                        onClick={() => {
+                        onBackClick();
+                        }}
+                    >
+                        Back
+                    </Button>
+                </Card.Footer>
+            </Card> 
         );
     }
     /*

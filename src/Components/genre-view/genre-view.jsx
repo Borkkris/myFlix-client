@@ -1,16 +1,44 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
+
+import './genre-view.scss';
+import CardHeader from 'react-bootstrap/esm/CardHeader';
 
 export class GenreView extends React.Component {
 
     render() {
-        const { onBackClick } = this.props;
+        const { genre, onBackClick } = this.props;
 
 
         return (
-            <button 
-                onClick={() => { onBackClick() }}>
-                    Back
-            </button>
+            <Container>
+                <Card className="genre-view">
+                    <Card.Header className="genre-view-header">Genre</Card.Header>
+                    <Card.Body className="genre-view-title">{genre.Name}</Card.Body>
+                    <Card.Body>{genre.Description}</Card.Body>
+                    <Card.Footer>
+                        <Button
+                            className="genre-view-button"
+                            onClick={() => {
+                            onBackClick();
+                            }}
+                            >
+                                Back
+                        </Button>
+                    </Card.Footer>
+                </Card>
+            </Container>
         );
     }
 }
+
+GenreView.proptypes = {
+    Genre: PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+        Description: PropTypes.string.isRequired,
+    }).isRequired,
+};

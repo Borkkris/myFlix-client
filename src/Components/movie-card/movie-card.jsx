@@ -14,7 +14,7 @@ export class MovieCard extends React.Component {
                 <Card.Body>
                     <Card.Title>{movie.Title}</Card.Title>
                     <Card.Text>{movie.Description}</Card.Text>
-                    <Link to={`/movies/${movie._id}`}> {/* routing to the movie*/}
+                    <Link to={`/movies/${movie_id}`}> {/* routing to the movie*/}
                     Open
                     </Link>
                 </Card.Body>
@@ -25,6 +25,9 @@ export class MovieCard extends React.Component {
 
 MovieCard.propTypes = {
     movie: PropTypes.shape({ // The props object must include a movie object
-        Title: PropTypes.string}).isRequired, // The movie prop (object) may contain a Title key; if it does, then it must be of type string
-    onMovieClick: PropTypes.func.isRequired // The props object must contain onMovieClick and it must be a function
+        Title: PropTypes.string.isRequired, // The movie prop (object) may contain a Title key; if it does, then it must be of type string
+        Description: PropTypes.string.isRequired,
+        ImagePath: PropTypes.string.isRequired,
+    }).isRequired,
+    onMovieClick: PropTypes.func, // The props object must contain onMovieClick and it must be a function
 };
