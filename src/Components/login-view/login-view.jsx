@@ -1,9 +1,11 @@
 import React, { useState } from 'react'; //useState hook used without writing a new class / 
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
-import { Form, Button, Card, CardGroup, Container, Col, Row, Navbar, Nav } from 'react-bootstrap';
+import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
-import { Menubar } from '../NavBar/navbar';
+import { Link } from 'react-router-dom';
+
+import './login-view.scss';
 
 export function LoginView (props) {
     //call the useState-method imported from React with an empty string / This is the initial value of your login variable
@@ -55,39 +57,38 @@ export function LoginView (props) {
 
     return (
         <Container>
-            <Menubar user={null} />
-            
             <Row>
                 <Col>
-                <CardGroup>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Login</Card.Title>
-                                <Form>
-                                    <Form.Group controlId="formUsername">
-                                        <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
+                    <CardGroup>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>Login</Card.Title>
+                                 <Form>
+                                    <Form.Group controlId='formUsername'>
+                                        <Form.Control type='text' placeholder='Enter username' value={username} onChange={e => setUsername(e.target.value)} />
                                         
                                             {usernameErr && <p>{usernameErr}</p>}
 
                                     </Form.Group>
                                     <br />
-                                    <Form.Group controlId="formPassword">
-                                        <Form.Control type="password" placeholder="Password" vslue={password} onChange={e => setPassword(e.target.value)} />
+                                    <Form.Group controlId='formPassword'>
+                                        <Form.Control type='password' placeholder='Password' vslue={password} onChange={e => setPassword(e.target.value)} />
 
                                             {passwordErr && <p>{passwordErr}</p>}
 
                                     </Form.Group>
                                     <br />
-                                    <Button variant="primary" type="submit" onClick={handleSubmit}>
-                                        Submit
+                                    <Button variant='primary' type='submit' onClick={handleSubmit}>
+                                        Log In
                                     </Button>
-                                    <br />
-                                    <br />
-                                    {/* <Form.Label>Sign up:</Form.Label>
-                                    <br />
-                                    <Button variant="warning" type='submit' onBackClick={handleSubmit}>
-                                        Register here
-                                    </Button> */}
+
+                                    <Link to='/register'>
+                                    <Button 
+                                            className='login-register'
+                                            variant='success'>
+                                            Create new account
+                                        </Button>
+                                    </Link>
                                 </Form>
                             </Card.Body>
                         </Card>

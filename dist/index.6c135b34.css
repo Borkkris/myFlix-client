@@ -1,10 +1,14 @@
-.login {
+
+
+.login-register {
   margin-left: 10px;
 }
 
 
 
-
+.delete-button {
+  margin-left: 10px;
+}
 
 .my-flix {
   color: #e16fce;

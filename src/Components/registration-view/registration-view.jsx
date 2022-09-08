@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import emailPropType from 'email-prop-type';
 import { Form, Button, Card, CardGroup, Container, Col, Row, Navbar, Nav } from 'react-bootstrap';
-import axios from "axios";
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import './registration-view.scss'
@@ -40,7 +40,7 @@ export function RegistrationView(props) {
         if(!email) {
             setEmailErr('Email Required')
             isReq = false;
-            } else if(email.indexOf("@") === -1){
+            } else if(email.indexOf('@') === -1){
                 setEmailErr('Email is invalid')
                 isReq = false;
             }
@@ -74,19 +74,7 @@ export function RegistrationView(props) {
 
     return (
         <Container>
-            <Navbar bg="light" expand="lg">
-                <Container fluid>
-                    <Navbar.Brand href="#home">myFlix</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link to="/login">Login</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-            
-            <Row className="mt-5">
+            <Row className='mt-5'>
                 <Col md={12}>
                     <CardGroup>
                         <Card>
@@ -99,7 +87,7 @@ export function RegistrationView(props) {
                                             type='text' 
                                             value={username} 
                                             onChange={e => setUsername(e.target.value)} 
-                                            placeholder="Username"
+                                            placeholder='Username'
                                             />
 
                                             {usernameErr && <p>{usernameErr}</p>}
@@ -114,7 +102,7 @@ export function RegistrationView(props) {
                                             type='password' 
                                             value={password} 
                                             onChange={e => setPassword(e.target.value)}
-                                            placeholder="New Password"
+                                            placeholder='New Password'
                                             />
 
                                             {passwordErr && <p>{passwordErr}</p>}
@@ -129,7 +117,7 @@ export function RegistrationView(props) {
                                             type='email' 
                                             value={email} 
                                             onChange={e => setEmail(e.target.value)} 
-                                            placeholder="Email"
+                                            placeholder='Email'
                                             />
 
                                            {emailErr && <p>{emailErr}</p>}
@@ -148,22 +136,23 @@ export function RegistrationView(props) {
                                     </Form.Group>
 
                                     <br />
+
                                     <Button
-                                    className="register"
-                                    variant="primary"
-                                    type="submit"
+                                    className='register-register'
+                                    variant='success'
+                                    type='submit'
                                     onClick={handleSubmit}
                                     >
-                                    Register
+                                    Sign Up
                                     </Button>
 
-                                    <Link to="/login">
-                                        <Button 
-                                            className="login"
-                                            variant="primary">
-                                            Sign in
-                                        </Button>
+                                    <br />
+
+                                    <div className='register-login'>
+                                    <Link to='/'>
+                                            Log In
                                     </Link>
+                                    </div>
                                 </Form>
                             </Card.Body>
                         </Card>
@@ -179,7 +168,7 @@ RegistrationView.propTypes = {
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     email: emailPropType.isRequired,
-    Birthday:PropTypes.instanceOf(Date).isRequired,
+    Birthday: PropTypes.string.isRequired,
     }),
   onRegistration: PropTypes.func.isRequired,
 };
