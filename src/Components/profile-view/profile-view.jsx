@@ -35,26 +35,6 @@ import './profile-view.scss';
     window.open('/', '_self');
     }
 
-    // when user deletes a movie from favorite list
-    onRemoveFavorite = (e, movie) => {
-        const Username = localStorage.getItem('user');
-        console.log(Username);
-        const token = localStorage.getItem('token');
-        console.log(this.props);
-
-        axios.delete(`https://app-my-flix.herokuapp.com/users(${Username}/movies/${movieID}`,
-        { headers: { Authorization: `Bearer ${token}`} }
-        )
-        .then((response) => {
-            console.log(response);
-            alert(`${movie.Title} was removed from your favorites`)
-            this.componentDidMount();
-        })
-        .catch(function (error) {
-            console.log(error.response.data);
-        });
-    };
-
     // get user by name
     getUser = (token) => {
         const Username = localStorage.getItem('user');

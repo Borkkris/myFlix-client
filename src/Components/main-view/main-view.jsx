@@ -14,6 +14,7 @@ import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { ProfileView } from '../profile-view/profile-view';
+import
 
 import './main-view.scss';
 
@@ -54,6 +55,45 @@ class MainView extends React.Component { //this generates the mainView component
         });
     }
 
+    handleFavorite = (movieId, action) => {
+        const { username, favoriteMovies } = this.state;
+        const accessToken = localStorage.getItem('token');
+        if (accessToken !== null && username !== null) {
+            // Add MovieID to Favorites (local state & webserver)
+            if (action === 'add') {
+                this.setState({ favoriteMovies: [...favoriteMovies, movieId] });
+                axios.post(`https://top-flix.herokuapp.com/users/${username}/favorites/${movieId}`,
+                {
+                headers: { Authorization: `Bearer ${accessToken}` },
+                }
+                )
+            .then((res) => {
+                console.log(`Movie added to ${username} Favorite movies`);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+            // Remove MovieID from Favorites (local state & webserver)
+            } else if (action === 'remove') {
+                this.setState({
+                    favoriteMovies: favoriteMovies.filter((id) => id !== movieId),
+                });
+                axios.delete(`https://top-flix.herokuapp.com/users/${username}/favorites/${movieId}`,
+            {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            }
+                )
+            .then((res) => {
+                console.log(`Movie removed from ${username} Favorite movies`);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+            } 
+        }
+    };
+
      onLoggedIn(authData) { // When a user logs in, the props onLoggedIn(data) is passed to the LoginView and triggers the function onLoggedIn(authData) in the MainView. This updates the state with the logged in authData.
         console.log(authData); // authData sent to the console
         this.setState({
@@ -79,7 +119,7 @@ class MainView extends React.Component { //this generates the mainView component
 
     // controls what the component displays or visual representation of the component
     render() {
-        const { movies, user} = this.state;
+        const { movies, user, favoriteMovies} = this.state;
 
         return (
             <Router>
@@ -161,6 +201,8 @@ class MainView extends React.Component { //this generates the mainView component
                                     <ProfileView 
                                     user={user} 
                                     onBackClick={() => history.goBack()}
+                                    favoriteMovies={favoriteMovies || []}
+                                    handleFavorite={this.handleFavorite}
                                     movies={movies}
                                     />
                                 </Col>
