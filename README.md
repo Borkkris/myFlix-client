@@ -4,7 +4,7 @@ This is the client side of the myFlix app.
 The myFlix app is a Movie library.
 
 ## Framework:
-It will use React as a framework.
+* React
 
 ## API:
 It interfaces with a Webserver API called myFlixDB which was built with Node.js, Express and MongoDB
