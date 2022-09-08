@@ -17,12 +17,12 @@ It interfaces with a Webserver API called myFlixDB which was built with Node.js,
 
 ## Features
 
-## characteristics:
+### characteristics:
 * Single-Page-Application (SPA)
 * responsive design
 * lots of interactions
 
-## functions:
+### functions:
 * Sign up to create an account
 * login
 * update account
