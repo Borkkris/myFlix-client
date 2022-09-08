@@ -133,10 +133,36 @@ import './profile-view.scss';
         });
     }
 
-    
+    // Set user values
+  setUsername(value) {
+    this.setState({
+      Username: value,
+    });
+    this.Username = value;
+  }
+
+  setPassword(value) {
+    this.setState({
+      Password: value,
+    });
+    this.Password = value;
+  }
+
+  setEmail(value) {
+    this.setState({
+      Email: value,
+    });
+    this.Email = value;
+  }
+
+  setBirthday(value) {
+    this.setState({
+      Birthday: value,
+    });
+    this.Birthday = value;
+  }
 
     render () {
-    const { movies } = this.props;
     const { FavoriteMovies, Username, Password, Email, Birthday } = this.state;
 
     return (
@@ -147,9 +173,11 @@ import './profile-view.scss';
                         <Card.Header>{Username}'s profile</Card.Header>
                         <Card.Body>
                             <>
-                                <p>Name: {Username}</p>
-                                <p>Email: {Email}</p>
-                                <p>Birthday: {Birthday}</p>
+                                Name: {Username}
+                                <br />
+                                Email: {Email}
+                                <br />
+                                Birthday: {Birthday}
                             </>
                         </Card.Body>
                     </Card>

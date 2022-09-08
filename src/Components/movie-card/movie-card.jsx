@@ -10,11 +10,11 @@ export class MovieCard extends React.Component {
         // card that displays your movie’s image, title, and description, along with a button to open the card
         return ( 
             <Card>
-                <Card.Img variant='top' src={movie.ImagePath} crossOrigin='anonymous' />
+                <Card.Img variant='top' src={movie.ImagePath} />
                 <Card.Body>
                     <Card.Title>{movie.Title}</Card.Title>
                     <Card.Text>{movie.Description}</Card.Text>
-                    <Link to={`/movies/${movie_id}`}> {/* routing to the movie*/}
+                    <Link to={`/movies/${movie._id}`}> {/* routing to the movie*/}
                     Open
                     </Link>
                 </Card.Body>

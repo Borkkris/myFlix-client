@@ -6,7 +6,6 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 
 import './genre-view.scss';
-import CardHeader from 'react-bootstrap/esm/CardHeader';
 
 export class GenreView extends React.Component {
 
