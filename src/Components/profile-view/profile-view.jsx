@@ -144,7 +144,7 @@ import './profile-view.scss';
             <Row>
                 <Col>
                     <Card className = 'user-profile'>
-                        <Card.Header>{Username} profile</Card.Header>
+                        <Card.Header>{Username}'s profile</Card.Header>
                         <Card.Body>
                             <>
                                 <p>Name: {Username}</p>
@@ -248,8 +248,8 @@ import './profile-view.scss';
             <Card className='favmov-inputs'>
                 <Card.Body>
                     <Row>
-                        <Col>
-                                <h4>Favorite Movies</h4>
+                        <Col xs={12}>
+                            <h4>Favorite Movies</h4>
                         </Col>
                     </Row>
                     <Row>

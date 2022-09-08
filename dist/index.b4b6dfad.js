@@ -40507,7 +40507,7 @@ class ProfileView extends (0, _reactDefault.default).Component {
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Header, {
                                         children: [
                                             Username,
-                                            " profile"
+                                            "'s profile"
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/Components/profile-view/profile-view.jsx",
@@ -40740,12 +40740,13 @@ class ProfileView extends (0, _reactDefault.default).Component {
                         children: [
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Row), {
                                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                                    xs: 12,
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
                                         children: "Favorite Movies"
                                     }, void 0, false, {
                                         fileName: "src/Components/profile-view/profile-view.jsx",
                                         lineNumber: 252,
-                                        columnNumber: 33
+                                        columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "src/Components/profile-view/profile-view.jsx",
