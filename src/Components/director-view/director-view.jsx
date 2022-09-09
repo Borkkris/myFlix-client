@@ -16,10 +16,12 @@ export class DirectorView extends React.Component {
                         <h3>{director.Name}</h3>
                         </Card.Body>
                     <Card.Body>
-                        Born: {director.Birth}
+                        <b>Born:</b><br /> 
+                        {director.Birth}
                         </Card.Body>
                     <Card.Body>
-                        Bio: {director.Bio}
+                        <b>Bio:</b> <br />
+                        {director.Bio}
                         </Card.Body>
                     <Card.Footer>
                         <Button

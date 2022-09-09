@@ -27281,7 +27281,7 @@ class MainView extends (0, _reactDefault.default).Component {
                                         md: 8,
                                         children: [
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _directorView.DirectorView), {
-                                                director: movies.find((m)=>m.Director.Name === match.params.name).director,
+                                                director: movies.find((m)=>m.Director.Name === match.params.name).Director,
                                                 onBackClick: ()=>history.goBack()
                                             }, void 0, false, void 0, void 0),
                                             " "
@@ -27308,7 +27308,7 @@ class MainView extends (0, _reactDefault.default).Component {
                                         md: 8,
                                         children: [
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _genreView.GenreView), {
-                                                genre: movies.find((m)=>m.Genre.Name === match.params.name).genre,
+                                                genre: movies.find((m)=>m.Genre.Name === match.params.name).Genre,
                                                 onBackClick: ()=>history.goBack()
                                             }, void 0, false, void 0, void 0),
                                             " "
@@ -40277,7 +40277,18 @@ class DirectorView extends (0, _reactDefault.default).Component {
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
                         children: [
-                            "Born: ",
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("b", {
+                                children: "Born:"
+                            }, void 0, false, {
+                                fileName: "src/Components/director-view/director-view.jsx",
+                                lineNumber: 19,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
+                                fileName: "src/Components/director-view/director-view.jsx",
+                                lineNumber: 19,
+                                columnNumber: 37
+                            }, this),
                             director.Birth
                         ]
                     }, void 0, true, {
@@ -40287,12 +40298,24 @@ class DirectorView extends (0, _reactDefault.default).Component {
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
                         children: [
-                            "Bio: ",
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("b", {
+                                children: "Bio:"
+                            }, void 0, false, {
+                                fileName: "src/Components/director-view/director-view.jsx",
+                                lineNumber: 23,
+                                columnNumber: 25
+                            }, this),
+                            " ",
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
+                                fileName: "src/Components/director-view/director-view.jsx",
+                                lineNumber: 23,
+                                columnNumber: 37
+                            }, this),
                             director.Bio
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/director-view/director-view.jsx",
-                        lineNumber: 21,
+                        lineNumber: 22,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Footer, {
@@ -40304,12 +40327,12 @@ class DirectorView extends (0, _reactDefault.default).Component {
                             children: "Back"
                         }, void 0, false, {
                             fileName: "src/Components/director-view/director-view.jsx",
-                            lineNumber: 25,
+                            lineNumber: 27,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "src/Components/director-view/director-view.jsx",
-                        lineNumber: 24,
+                        lineNumber: 26,
                         columnNumber: 21
                     }, this)
                 ]
@@ -40982,7 +41005,13 @@ class GenreView extends (0, _reactDefault.default).Component {
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
                         className: "genre-view-title",
-                        children: genre.Name
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("b", {
+                            children: genre.Name
+                        }, void 0, false, {
+                            fileName: "src/Components/genre-view/genre-view.jsx",
+                            lineNumber: 19,
+                            columnNumber: 25
+                        }, this)
                     }, void 0, false, {
                         fileName: "src/Components/genre-view/genre-view.jsx",
                         lineNumber: 18,
