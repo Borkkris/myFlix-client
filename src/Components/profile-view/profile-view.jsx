@@ -69,7 +69,7 @@ import './profile-view.scss';
                 Birthday: this.state.Birthday,
             },
             {
-                headers: { Authorization: `Bearer ${token}`}
+                headers: { Authorization: `Bearer ${token}` }
             }
         )
         .then((response) => {
