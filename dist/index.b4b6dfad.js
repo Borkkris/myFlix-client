@@ -27281,7 +27281,7 @@ class MainView extends (0, _reactDefault.default).Component {
                                         md: 8,
                                         children: [
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _directorView.DirectorView), {
-                                                director: movies.find((m)=>m.director.Name === match.params.name).director,
+                                                director: movies.find((m)=>m.Director.Name === match.params.name).director,
                                                 onBackClick: ()=>history.goBack()
                                             }, void 0, false, void 0, void 0),
                                             " "
@@ -27312,7 +27312,7 @@ class MainView extends (0, _reactDefault.default).Component {
                                         md: 8,
                                         children: [
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _genreView.GenreView), {
-                                                genre: movies.find((m)=>m.genre.Name === match.params.name).Genre,
+                                                genre: movies.find((m)=>m.Genre.Name === match.params.name).genre,
                                                 onBackClick: ()=>history.goBack()
                                             }, void 0, false, void 0, void 0),
                                             " "
@@ -40556,10 +40556,10 @@ class ProfileView extends (0, _reactDefault.default).Component {
                 Email: response.data.Email,
                 Birthday: response.data.Birthday
             });
-            localStorage.setItem("user", this.state.Username);
+            localStorage.setItem("user", response.state.Username);
             const data = response.data;
             console.log(data);
-            console.log(this.state.Username);
+            console.log(response.state.Username);
             alert("You updated your profile!");
             window.open(`/users/${Username}`, "_self");
         }).catch(function(error) {
@@ -40779,7 +40779,7 @@ class ProfileView extends (0, _reactDefault.default).Component {
                                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                                                                 variant: "success",
                                                                 type: "submit",
-                                                                onClick: ()=>this.editUser(),
+                                                                onClick: (e)=>this.editUser(e),
                                                                 children: "Update User"
                                                             }, void 0, false, {
                                                                 fileName: "src/Components/profile-view/profile-view.jsx",

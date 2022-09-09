@@ -80,10 +80,10 @@ import './profile-view.scss';
                 Birthday: response.data.Birthday,
             });
         
-            localStorage.setItem('user', this.state.Username);
+            localStorage.setItem('user', response.state.Username);
             const data = response.data;
             console.log(data);
-            console.log(this.state.Username);
+            console.log(response.state.Username);
             alert('You updated your profile!');
             window.open(`/users/${Username}`, '_self');
         })
@@ -233,7 +233,7 @@ import './profile-view.scss';
                                         <Button
                                             variant="success"
                                             type="submit"
-                                            onClick={() => this.editUser()}
+                                            onClick={(e) => this.editUser(e)}
                                         >
                                             Update User
                                         </Button>
