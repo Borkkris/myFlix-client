@@ -81,11 +81,8 @@ import './profile-view.scss';
             });
         
             localStorage.setItem('user', response.data.Username);
-            const data = response.data;
-            console.log(data);
-            console.log(response.data.Username);
             alert('You updated your profile!');
-            window.open(`/users/${Username}`, '_self');
+            window.open(`/users/${response.data.Username}`, '_self');
         })
         .catch(function (error) {
             console.log(error);
