@@ -179,14 +179,11 @@ class MainView extends React.Component { //this generates the mainView component
                             }} />
 
                             {/* route for link on main-view to genre-view */}
-                            <Route path='/genre/:name' render={({ match, history }) => {
+                            <Route path='/genres/:name' render={({ match, history }) => {
                                 if (!user) 
                                     return <Col>
                                         <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                                     </Col>
-                                    if (movies.length === 0) 
-                                        return 
-                                            <div className='main-view' />
                                 if (movies.length === 0) return <div className = 'main-view' />;
                                 return <Col md={8}>
                                     <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).genre} onBackClick={() => history.goBack()} /> {/* loop through the movies array (using the find() method) and compare the director’s name from your database*/}

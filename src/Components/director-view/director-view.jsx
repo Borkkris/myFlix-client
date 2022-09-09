@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Card, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 export class DirectorView extends React.Component {

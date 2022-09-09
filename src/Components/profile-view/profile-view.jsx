@@ -80,10 +80,10 @@ import './profile-view.scss';
                 Birthday: response.data.Birthday,
             });
         
-            localStorage.setItem('user', response.state.Username);
+            localStorage.setItem('user', response.data.Username);
             const data = response.data;
             console.log(data);
-            console.log(response.state.Username);
+            console.log(response.data.Username);
             alert('You updated your profile!');
             window.open(`/users/${Username}`, '_self');
         })
