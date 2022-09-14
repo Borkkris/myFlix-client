@@ -14,6 +14,7 @@ It interfaces with a Webserver API called myFlixDB which was built with Node.js,
 * React
 * Parcel
 * JS
+* Redux
 
 ## Features
 
