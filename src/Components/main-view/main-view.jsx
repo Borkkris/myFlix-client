@@ -24,10 +24,11 @@ import './main-view.scss';
 
 
 // export makes the ne component usable by others
-class MainView extends React.Component { //this generates the mainView component
+export class MainView extends React.Component { //this generates the mainView component
     
     constructor(){ //The method that React uses to actually create the component in-memory + starting point of any class component
         super(); //initializes your component’s state + mendatory when using constructor function + will call the parent React.Component’s constructor, which will give my class the actual React component’s features
+       
         this.state = {
             user: null //The user property is initialized to null in the state (default is logged out). When the app is first run or when a user has logged out, there is no user that is logged in, hence setting the user to null.
         }; 
@@ -52,7 +53,7 @@ class MainView extends React.Component { //this generates the mainView component
             this.props.setMovies(response.data);
         })
         .catch(function (error) {
-        console.log(error);
+            console.log(error);
         });
     }
 
@@ -120,8 +121,9 @@ class MainView extends React.Component { //this generates the mainView component
 
     // controls what the component displays or visual representation of the component
     render() {
-        const { movies } = this.props;
-        const {user, favoriteMovies} = this.state;
+        let { movies } = this.props;
+        let { user } = this.state;
+        let { favoriteMovies } = this.state;
         
 
         return (
@@ -136,14 +138,14 @@ class MainView extends React.Component { //this generates the mainView component
                                 if (!user) 
                                     return ( 
                                         <Col>
-                                            <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                                         </Col>
                                     );
 
                                 // Before the movies have been loaded
                                 if (movies.length === 0) 
                                     return <div className='main-view' />
-                                    return <MoviesList movies={movies}/>;
+                                    // return <MoviesList movies={movies}/>;
                             }} />
 
                             {/* route for link on main-view to registration-view */}
