@@ -2,14 +2,13 @@ import React from 'react';// imports react into the file. Its important for crea
 import { BrowserRouter as Router, Route, Redirect  } from 'react-router-dom'; // react-router library for routing / BrowserRouter for state-based-routing
 import axios from 'axios';// imports axios into the file. Its important to do Ajax requests
 import { Container, Col, Row } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'; // use connect to import connect-function from react-redux to connect any stateful-component of the app to the store
 
 
 
 //importing component MovieCard, MovieView...
 import { Menubar } from '../NavBar/navbar';
 import { LoginView } from '../login-view/login-view';
-// import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
@@ -18,13 +17,13 @@ import { ProfileView } from '../profile-view/profile-view';
 import { setMovies } from '../../actions/actions';
 
 // this one must be still written
-// import MoviesList from '../movies-list/movies-list';
+import MoviesList from '../movies-list/movies-list';
 
 import './main-view.scss';
 
 
 // export makes the ne component usable by others
-export class MainView extends React.Component { //this generates the mainView component
+class MainView extends React.Component { //this generates the mainView component
     
     constructor(){ //The method that React uses to actually create the component in-memory + starting point of any class component
         super(); //initializes your component’s state + mendatory when using constructor function + will call the parent React.Component’s constructor, which will give my class the actual React component’s features
@@ -50,7 +49,7 @@ export class MainView extends React.Component { //this generates the mainView co
             headers: { Authorization: `Bearer ${token}`} // By passing bearer authorization in the header of your HTTP requests, you can make authenticated requests to your API
         })
         .then((response) => {
-            this.props.setMovies(response.data);
+            this.props.setMovies(response.data); // parses the repsonse into setMovies
         })
         .catch(function (error) {
             console.log(error);
@@ -121,13 +120,13 @@ export class MainView extends React.Component { //this generates the mainView co
 
     // controls what the component displays or visual representation of the component
     render() {
-        let { movies } = this.props;
+        let { movies } = this.props; // now this has the movies because movies are passed into props via mapStateToProps function
         let { user } = this.state;
         let { favoriteMovies } = this.state;
         
 
         return (
-            <Router>
+            <Router> {/* to create routes */}
                 <Menubar user={user} />
                 <Container>
                     <Row className='main-view justify-content-md-center'> 
@@ -145,7 +144,7 @@ export class MainView extends React.Component { //this generates the mainView co
                                 // Before the movies have been loaded
                                 if (movies.length === 0) 
                                     return <div className='main-view' />
-                                    // return <MoviesList movies={movies}/>;
+                                    return <MoviesList movies={movies}/>;
                             }} />
 
                             {/* route for link on main-view to registration-view */}
@@ -212,7 +211,14 @@ export class MainView extends React.Component { //this generates the mainView co
     }
 }
 
-let mapStateToProps = state => {
-  return { movies: state.movies }
+
+let mapStateToProps = state => { 
+    return { movies: state.movies }
 }
+// mapStateToProps is a function that—if defined—will allow the component (the one you want to connect) to subscribe to store updates. 
+// Any time the store is updated, this function will be called.
+
+// the output is the setMovies action / component is MainView / Connecting this component to an action allows you to receive the actual action as a prop.
+// connect() is central to React Redux - > it means:  wrap any stateful component to connect it to a store
+// setMovies is given as a prop to your MainView component because it’s wrapped in the connect() function.
 export default connect(mapStateToProps, { setMovies } )(MainView) // default used to get rid of the curly braces (also in import)

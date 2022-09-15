@@ -2908,7 +2908,7 @@ var _reactDomDefault = parcelHelpers.interopDefault(_reactDom);
 var _container = require("react-bootstrap/Container");
 var _containerDefault = parcelHelpers.interopDefault(_container);
 var _redux = require("redux");
-var _reactRedux = require("react-redux");
+var _reactRedux = require("react-redux"); // makes the store accessible to any component
 var _reduxDevtoolsExtension = require("redux-devtools-extension");
 var _reducers = require("./reducers/reducers");
 var _reducersDefault = parcelHelpers.interopDefault(_reducers);
@@ -2923,12 +2923,15 @@ class MyFlixApplication extends (0, _reactDefault.default).Component {
         return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRedux.Provider), {
             store: store,
             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _containerDefault.default), {
-                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mainViewDefault.default), {}, void 0, false, {
-                    fileName: "src/index.jsx",
-                    lineNumber: 22,
-                    columnNumber: 11
-                }, this)
-            }, void 0, false, {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mainViewDefault.default), {}, void 0, false, {
+                        fileName: "src/index.jsx",
+                        lineNumber: 22,
+                        columnNumber: 11
+                    }, this),
+                    " "
+                ]
+            }, void 0, true, {
                 fileName: "src/index.jsx",
                 lineNumber: 21,
                 columnNumber: 9
@@ -29997,6 +30000,7 @@ function visibilityFilter(state = "", action) {
 function movies(state = [], action) {
     switch(action.type){
         case 0, _actions.SET_MOVIES:
+            console.log("SET_MOVIES reducer reached");
             return action.value;
         default:
             return state;
@@ -30619,8 +30623,6 @@ $parcel$ReactRefreshHelpers$8206.prelude(module);
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-// export makes the ne component usable by others
-parcelHelpers.export(exports, "MainView", ()=>MainView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react"); // imports react into the file. Its important for creating components
 var _reactDefault = parcelHelpers.interopDefault(_react);
@@ -30628,11 +30630,10 @@ var _reactRouterDom = require("react-router-dom"); // react-router library for r
 var _axios = require("axios"); // imports axios into the file. Its important to do Ajax requests
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _reactBootstrap = require("react-bootstrap");
-var _reactRedux = require("react-redux");
+var _reactRedux = require("react-redux"); // use connect to import connect-function from react-redux to connect any stateful-component of the app to the store
 //importing component MovieCard, MovieView...
 var _navbar = require("../NavBar/navbar");
 var _loginView = require("../login-view/login-view");
-// import { MovieCard } from '../movie-card/movie-card';
 var _movieView = require("../movie-view/movie-view");
 var _genreView = require("../genre-view/genre-view");
 var _directorView = require("../director-view/director-view");
@@ -30640,8 +30641,10 @@ var _registrationView = require("../registration-view/registration-view");
 var _profileView = require("../profile-view/profile-view");
 var _actions = require("../../actions/actions");
 // this one must be still written
-// import MoviesList from '../movies-list/movies-list';
+var _moviesList = require("../movies-list/movies-list");
+var _moviesListDefault = parcelHelpers.interopDefault(_moviesList);
 var _mainViewScss = require("./main-view.scss");
+// export makes the ne component usable by others
 class MainView extends (0, _reactDefault.default).Component {
     constructor(){
         super(); //initializes your component’s state + mendatory when using constructor function + will call the parent React.Component’s constructor, which will give my class the actual React component’s features
@@ -30665,7 +30668,7 @@ class MainView extends (0, _reactDefault.default).Component {
                 Authorization: `Bearer ${token}`
             } // By passing bearer authorization in the header of your HTTP requests, you can make authenticated requests to your API
         }).then((response)=>{
-            this.props.setMovies(response.data);
+            this.props.setMovies(response.data); // parses the repsonse into setMovies
         }).catch(function(error) {
             console.log(error);
         });
@@ -30729,16 +30732,17 @@ class MainView extends (0, _reactDefault.default).Component {
     }
     // controls what the component displays or visual representation of the component
     render() {
-        let { movies  } = this.props;
+        let { movies  } = this.props; // now this has the movies because movies are passed into props via mapStateToProps function
         let { user  } = this.state;
         let { favoriteMovies  } = this.state;
         return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.BrowserRouter), {
             children: [
+                " ",
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbar.Menubar), {
                     user: user
                 }, void 0, false, {
                     fileName: "src/Components/main-view/main-view.jsx",
-                    lineNumber: 131,
+                    lineNumber: 130,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Container), {
@@ -30759,11 +30763,13 @@ class MainView extends (0, _reactDefault.default).Component {
                                     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                         className: "main-view"
                                     }, void 0, false, void 0, void 0);
-                                // return <MoviesList movies={movies}/>;
+                                    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _moviesListDefault.default), {
+                                        movies: movies
+                                    }, void 0, false, void 0, void 0);
                                 }
                             }, void 0, false, {
                                 fileName: "src/Components/main-view/main-view.jsx",
-                                lineNumber: 136,
+                                lineNumber: 135,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -30778,7 +30784,7 @@ class MainView extends (0, _reactDefault.default).Component {
                                 }
                             }, void 0, false, {
                                 fileName: "src/Components/main-view/main-view.jsx",
-                                lineNumber: 152,
+                                lineNumber: 151,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -30802,7 +30808,7 @@ class MainView extends (0, _reactDefault.default).Component {
                                 }
                             }, void 0, false, {
                                 fileName: "src/Components/main-view/main-view.jsx",
-                                lineNumber: 160,
+                                lineNumber: 159,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -30829,7 +30835,7 @@ class MainView extends (0, _reactDefault.default).Component {
                                 }
                             }, void 0, false, {
                                 fileName: "src/Components/main-view/main-view.jsx",
-                                lineNumber: 172,
+                                lineNumber: 171,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -30856,7 +30862,7 @@ class MainView extends (0, _reactDefault.default).Component {
                                 }
                             }, void 0, false, {
                                 fileName: "src/Components/main-view/main-view.jsx",
-                                lineNumber: 184,
+                                lineNumber: 183,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -30877,24 +30883,24 @@ class MainView extends (0, _reactDefault.default).Component {
                                 }
                             }, void 0, false, {
                                 fileName: "src/Components/main-view/main-view.jsx",
-                                lineNumber: 196,
+                                lineNumber: 195,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/main-view/main-view.jsx",
-                        lineNumber: 133,
+                        lineNumber: 132,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "src/Components/main-view/main-view.jsx",
-                    lineNumber: 132,
+                    lineNumber: 131,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "src/Components/main-view/main-view.jsx",
-            lineNumber: 130,
+            lineNumber: 129,
             columnNumber: 13
         }, this);
     }
@@ -30904,6 +30910,11 @@ let mapStateToProps = (state)=>{
         movies: state.movies
     };
 };
+// mapStateToProps is a function that—if defined—will allow the component (the one you want to connect) to subscribe to store updates. 
+// Any time the store is updated, this function will be called.
+// the output is the setMovies action / component is MainView / Connecting this component to an action allows you to receive the actual action as a prop.
+// connect() is central to React Redux - > it means:  wrap any stateful component to connect it to a store
+// setMovies is given as a prop to your MainView component because it’s wrapped in the connect() function.
 exports.default = (0, _reactRedux.connect)(mapStateToProps, {
     setMovies: (0, _actions.setMovies)
 })(MainView) // default used to get rid of the curly braces (also in import)
@@ -30914,7 +30925,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"cHIiW","axios":"jo6P5","react-bootstrap":"3AD9A","react-redux":"bdVon","../NavBar/navbar":"h5jHq","../login-view/login-view":"6x8xV","../movie-view/movie-view":"ho5wj","../genre-view/genre-view":"2SHPH","../director-view/director-view":"cuQd1","../registration-view/registration-view":"gI0p1","../profile-view/profile-view":"7u73Z","../../actions/actions":"biFwH","./main-view.scss":"55tGP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"cHIiW":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"cHIiW","axios":"jo6P5","react-bootstrap":"3AD9A","react-redux":"bdVon","../NavBar/navbar":"h5jHq","../login-view/login-view":"6x8xV","../movie-view/movie-view":"ho5wj","../genre-view/genre-view":"2SHPH","../director-view/director-view":"cuQd1","../registration-view/registration-view":"gI0p1","../profile-view/profile-view":"7u73Z","../../actions/actions":"biFwH","./main-view.scss":"55tGP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../movies-list/movies-list":"3M37Q"}],"cHIiW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MemoryRouter", ()=>(0, _reactRouter.MemoryRouter));
@@ -43110,6 +43121,152 @@ class ProfileView extends (0, _reactDefault.default).Component {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","axios":"jo6P5","prop-types":"7wKI2","react-bootstrap":"3AD9A","react-bootstrap/esm/CardHeader":"dXnnx","./profile-view.scss":"c7ee8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"c7ee8":[function() {},{}],"55tGP":[function() {},{}]},["1xC6H","jVvJi","d8Dch"], "d8Dch", "parcelRequireaec4")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","axios":"jo6P5","prop-types":"7wKI2","react-bootstrap":"3AD9A","react-bootstrap/esm/CardHeader":"dXnnx","./profile-view.scss":"c7ee8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"c7ee8":[function() {},{}],"55tGP":[function() {},{}],"3M37Q":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$d57f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$d57f.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _reactRedux = require("react-redux");
+var _movieCard = require("../movie-card/movie-card");
+const mapStateToProps = (state)=>{
+    const { visibilityFilter  } = state;
+    return {
+        visibilityFilter
+    };
+};
+function MoviesList(props) {
+    const { movies , visibilityFilter  } = props; // two propperties
+    let filteredMovies = movies;
+    if (visibilityFilter !== "") filteredMovies = movies.filter((m)=>m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())); // The toLowerCase() method is a built-in method for strings. It returns the same string in lower case characters.
+    if (!movies) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "main-view"
+    }, void 0, false, {
+        fileName: "src/Components/movies-list/movies-list.jsx",
+        lineNumber: 20,
+        columnNumber: 25
+    }, this);
+    return filteredMovies.map((m)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+            md: 3,
+            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
+                movie: m
+            }, void 0, false, {
+                fileName: "src/Components/movies-list/movies-list.jsx",
+                lineNumber: 24,
+                columnNumber: 13
+            }, this)
+        }, m._id, false, {
+            fileName: "src/Components/movies-list/movies-list.jsx",
+            lineNumber: 23,
+            columnNumber: 9
+        }, this));
+}
+_c = MoviesList;
+//mapStateToProps, is a function that converts or transforms the store into props that the MoviesList component will use
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(MoviesList);
+var _c;
+$RefreshReg$(_c, "MoviesList");
+
+  $parcel$ReactRefreshHelpers$d57f.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Col":"2L2I6","react-redux":"bdVon","../movie-card/movie-card":"7nFi2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"7nFi2":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$2780 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$2780.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MovieCard", ()=>MovieCard);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _card = require("react-bootstrap/Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
+var _reactRouterDom = require("react-router-dom");
+class MovieCard extends (0, _reactDefault.default).Component {
+    render() {
+        const { movie  } = this.props; // integrates the child element into the parent element (main-view.jsx)
+        // card that displays your movie’s image, title, and description, along with a button to open the card
+        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default), {
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Img, {
+                    variant: "top",
+                    src: movie.ImagePath
+                }, void 0, false, {
+                    fileName: "src/Components/movie-card/movie-card.jsx",
+                    lineNumber: 13,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Body, {
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Title, {
+                            children: movie.Title
+                        }, void 0, false, {
+                            fileName: "src/Components/movie-card/movie-card.jsx",
+                            lineNumber: 15,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Text, {
+                            children: movie.Description
+                        }, void 0, false, {
+                            fileName: "src/Components/movie-card/movie-card.jsx",
+                            lineNumber: 16,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
+                            to: `/movies/${movie._id}`,
+                            children: [
+                                " ",
+                                "Open"
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/Components/movie-card/movie-card.jsx",
+                            lineNumber: 17,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/Components/movie-card/movie-card.jsx",
+                    lineNumber: 14,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/Components/movie-card/movie-card.jsx",
+            lineNumber: 12,
+            columnNumber: 13
+        }, this);
+    }
+}
+MovieCard.propTypes = {
+    movie: (0, _propTypesDefault.default).shape({
+        Title: (0, _propTypesDefault.default).string.isRequired,
+        Description: (0, _propTypesDefault.default).string.isRequired,
+        ImagePath: (0, _propTypesDefault.default).string.isRequired
+    }).isRequired,
+    onMovieClick: (0, _propTypesDefault.default).func
+};
+
+  $parcel$ReactRefreshHelpers$2780.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-bootstrap/Card":"lAynp","react-router-dom":"cHIiW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","jVvJi","d8Dch"], "d8Dch", "parcelRequireaec4")
 
 //# sourceMappingURL=index.b4b6dfad.js.map

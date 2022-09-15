@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Container  from 'react-bootstrap/Container';
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'; // makes the store accessible to any component
 import { devToolsEnhancer } from 'redux-devtools-extension';
 import moviesApp from './reducers/reducers';
 
@@ -19,7 +19,7 @@ class MyFlixApplication extends React.Component {
     return (
       <Provider store={store}>
         <Container>
-          <MainView />
+          <MainView /> {/*has now access to the store*/}
         </Container>
       </Provider>
     );
