@@ -2,18 +2,23 @@ import React from 'react';// imports react into the file. Its important for crea
 import { BrowserRouter as Router, Route, Redirect  } from 'react-router-dom'; // react-router library for routing / BrowserRouter for state-based-routing
 import axios from 'axios';// imports axios into the file. Its important to do Ajax requests
 import { Container, Col, Row } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 
 
 //importing component MovieCard, MovieView...
 import { Menubar } from '../NavBar/navbar';
 import { LoginView } from '../login-view/login-view';
-import { MovieCard } from '../movie-card/movie-card';
+// import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { ProfileView } from '../profile-view/profile-view';
+import { setMovies } from '../../actions/actions';
+
+// this one must be still written
+// import MoviesList from '../movies-list/movies-list';
 
 import './main-view.scss';
 
@@ -24,7 +29,6 @@ class MainView extends React.Component { //this generates the mainView component
     constructor(){ //The method that React uses to actually create the component in-memory + starting point of any class component
         super(); //initializes your component’s state + mendatory when using constructor function + will call the parent React.Component’s constructor, which will give my class the actual React component’s features
         this.state = {
-            movies: [],
             user: null //The user property is initialized to null in the state (default is logged out). When the app is first run or when a user has logged out, there is no user that is logged in, hence setting the user to null.
         }; 
     }
@@ -45,12 +49,10 @@ class MainView extends React.Component { //this generates the mainView component
             headers: { Authorization: `Bearer ${token}`} // By passing bearer authorization in the header of your HTTP requests, you can make authenticated requests to your API
         })
         .then((response) => {
-            this.setState({
-                movies: response.data,
-            });
+            this.props.setMovies(response.data);
         })
         .catch(function (error) {
-            console.log(error);
+        console.log(error);
         });
     }
 
@@ -118,7 +120,9 @@ class MainView extends React.Component { //this generates the mainView component
 
     // controls what the component displays or visual representation of the component
     render() {
-        const { movies, user, favoriteMovies} = this.state;
+        const { movies } = this.props;
+        const {user, favoriteMovies} = this.state;
+        
 
         return (
             <Router>
@@ -139,11 +143,7 @@ class MainView extends React.Component { //this generates the mainView component
                                 // Before the movies have been loaded
                                 if (movies.length === 0) 
                                     return <div className='main-view' />
-                                    return movies.map(m => ( 
-                                        <Col md={4} key={m._id}>
-                                            <MovieCard movie={m} />
-                                        </Col>
-                                    ))
+                                    return <MoviesList movies={movies}/>;
                             }} />
 
                             {/* route for link on main-view to registration-view */}
@@ -210,4 +210,7 @@ class MainView extends React.Component { //this generates the mainView component
     }
 }
 
-export default MainView; // default used to get rid of the curly braces (also in import)
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+export default connect(mapStateToProps, { setMovies } )(MainView) // default used to get rid of the curly braces (also in import)
