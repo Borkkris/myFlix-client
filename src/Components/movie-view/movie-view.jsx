@@ -34,8 +34,17 @@ export class MovieView extends React.Component {
                     {movie.Description}
                 </Card.Body>
                 <Card.Footer>
+                    {/*how to implement the add to favorites button button?*/} 
                     <Button
-                        className="movie-view-button"
+                        className="movie-view-favorite-button"
+                        onClick={() => {
+                        /*which function here?()*/;
+                        }}
+                    >
+                        + to favorites
+                    </Button>
+                    <Button
+                        className="movie-view-back-button"
                         onClick={() => {
                         onBackClick();
                         }}
@@ -46,18 +55,4 @@ export class MovieView extends React.Component {
             </Card> 
         );
     }
-    /*
-    // code executed right after the component is added to the DOM.
-    componentDidMount() {
-
-    }
-    // code executed right after component's state or props are changed.
-    componentDidUpdate() {
-
-    }
-    // code executed just before the moment the component gets removed from the DOM.
-    componentWillUnmount() {
-
-    }
-    */
 }
