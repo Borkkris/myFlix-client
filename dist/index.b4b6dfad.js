@@ -30000,7 +30000,6 @@ function visibilityFilter(state = "", action) {
 function movies(state = [], action) {
     switch(action.type){
         case 0, _actions.SET_MOVIES:
-            console.log("SET_MOVIES reducer reached");
             return action.value;
         default:
             return state;
@@ -43159,7 +43158,7 @@ function MoviesList(props) {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-                md: 12,
+                lg: 12,
                 style: {
                     margin: "1em"
                 },
