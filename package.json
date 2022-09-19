@@ -16,7 +16,6 @@
   },
   "homepage": "https://github.com/Borkkris/myFlix-client#readme",
   "dependencies": {
-    "@parcel/transformer-js": "^2.7.0",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
     "email-prop-type": "^3.0.1",
@@ -30,8 +29,8 @@
     "redux-devtools-extension": "^2.13.9"
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.7.0",
-    "parcel": "^2.7.0",
+    "@parcel/transformer-sass": "^2.0.0-rc.0",
+    "parcel": "^2.0.0-rc.0",
     "process": "^0.11.10"
   }
 }
