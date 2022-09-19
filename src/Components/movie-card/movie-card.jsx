@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from 'react-bootstrap/Card';
+import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
+import './movie-card.scss';
 
 export class MovieCard extends React.Component {
     render() {
@@ -9,15 +11,17 @@ export class MovieCard extends React.Component {
         
         // card that displays your movie’s image, title, and description, along with a button to open the card
         return ( 
-            <Card>
+            <Card  border="light" className='h-100'>
                 <Card.Img variant='top' crossOrigin='anonymous' src={movie.ImagePath} />
-                <Card.Body>
+                <Card.Body className = 'cardBody'>
                     <Card.Title>{movie.Title}</Card.Title>
-                    <Card.Text>{movie.Description}</Card.Text>
-                    <Link to={`/movies/${movie._id}`}> {/* routing to the movie*/}
-                    Open
-                    </Link>
+                    
                 </Card.Body>
+                <Card.Footer class='movie-card-footer'>
+                    <Link className='movie-card-link-open-movie' to={`/movies/${movie._id}`}> {/* routing to the movie*/}
+                        Open
+                    </Link>
+                </Card.Footer>
             </Card>
         );
     }

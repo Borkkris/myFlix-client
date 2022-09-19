@@ -5,12 +5,67 @@
   margin-left: 10px;
 }
 
-
-.delete-button {
-  margin-left: 10px;
+.card-body {
+  background-color: #dbb4cc;
 }
-body {
-  background-color: e16fce;
+
+
+
+.cardBody {
+  background-color: #dbb4cc;
+  text-align: center;
+}
+
+.movie-card-link-open-movie {
+  background-color: rgba(219, 180, 204, 0.6117647059);
+  color: #000000;
+  border: 0px solid #555555;
+  border-radius: 3px;
+  padding: 10px 70px;
+  transition-duration: 0.4s;
+}
+
+.movie-card-link-open-movie:hover {
+  background-color: #e0a6d6;
+  color: white;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.movie-card-footer {
+  padding: 20px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .movie-card-link-open-movie {
+    background-color: rgba(219, 180, 204, 0.6117647059);
+    color: black;
+    border-radius: 3px;
+    padding: 10px 20px;
+    transition-duration: 0.4s;
+  }
+}
+@media (min-width: 996px) {
+  .movie-card-link-open-movie {
+    background-color: rgba(219, 180, 204, 0.6117647059);
+    color: black;
+    border-radius: 3px;
+    padding: 10px 50px;
+    transition-duration: 0.4s;
+  }
+}
+@media (min-width: 1200px) {
+  .movie-card-link-open-movie {
+    background-color: rgba(219, 180, 204, 0.6117647059);
+    color: black;
+    border-radius: 3px;
+    padding: 10px 70px;
+    transition-duration: 0.4s;
+  }
+}
+.app-container {
+  background-color: #b371a7;
 }
 .my-flix {
   color: #e16fce;

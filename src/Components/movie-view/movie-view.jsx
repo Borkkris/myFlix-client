@@ -10,17 +10,17 @@ export class MovieView extends React.Component {
         const { movie, onBackClick, handleFavorite } = this.props;
 
         return (
-            <Card className="movie-view">
+            <Card className='movie-view'>
                 <Card.Header>
-                    <Card.Img variant="top" crossOrigin='anonymous' src={movie.ImagePath} />
+                    <Card.Img variant='top' crossorigin='anonymous' src={movie.ImagePath} />
                 </Card.Header>
-                <Card.Body className="movie-view-title">
+                <Card.Body className='movie-view-title'>
                     <h1>{movie.Title}</h1>
                 </Card.Body>
                 <Card.Body>
                     <h4>Genre</h4>
                     <Link to={`/genres/${movie.Genre.Name}`}>
-                        <h3 className="genre-link link">{movie.Genre.Name}</h3>
+                        <h3 className='genre-link link'>{movie.Genre.Name}</h3>
                     </Link>
                 </Card.Body>
                 <Card.Body>
@@ -28,15 +28,15 @@ export class MovieView extends React.Component {
                     <Link to={`/directors/${movie.Director.Name}`}>
                         <h3 className="director-link link">{movie.Director.Name}</h3>
                     </Link>
-                </Card.Body>
+                </Card.Body >
                 <Card.Body>
                     <h4>Description:</h4>
                     {movie.Description}
                 </Card.Body>
-                <Card.Footer>
-                    {/*how to implement the add to favorites button button?*/} 
+                <Card.Footer className='movie-view-card-footer'> 
                     <Button
-                        className='movie-view-favorite-button'
+                        className='movie-view-favorite-button rounded-circle'
+                        variant="light"
                         onClick={() => {
                             handleFavorite(movie._id, 'add')
                         }}
@@ -45,6 +45,7 @@ export class MovieView extends React.Component {
                     </Button>
                     <Button
                         className='movie-view-back-button'
+                        variant="dark"
                         onClick={() => {
                         onBackClick();
                         }}

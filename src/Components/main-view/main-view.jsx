@@ -29,6 +29,7 @@ class MainView extends React.Component { //this generates the mainView component
         super(); //initializes your component’s state + mendatory when using constructor function + will call the parent React.Component’s constructor, which will give my class the actual React component’s features
        
         this.state = {
+            favoriteMovies: [],
             user: null, //The user property is initialized to null in the state (default is logged out). When the app is first run or when a user has logged out, there is no user that is logged in, hence setting the user to null.
             userObj: null,
         }; 
@@ -80,7 +81,7 @@ class MainView extends React.Component { //this generates the mainView component
         if (accessToken !== null && Username !== null) {
             // Add MovieID to Favorites (local state & webserver)
             if (action === 'add') {
-                
+
                 axios.post(`https://app-my-flix.herokuapp.com/users/${Username}/movies/${movieId}`,
                 {
                 headers: { Authorization: `Bearer ${accessToken}` },
@@ -102,7 +103,7 @@ class MainView extends React.Component { //this generates the mainView component
             }
                 )
             .then((res) => {
-                console.log(`Movie removed from ${Username} Favorite movies`);
+                console.log(`Movie removed from ${Username} favorite movies`);
             })
             .catch((err) => {
                 console.log(err);

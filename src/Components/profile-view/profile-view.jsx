@@ -258,19 +258,14 @@ import './profile-view.scss';
                         </Col>
                     </Row>
                     <Row>
-                        {FavoriteMovies.map((ImagePath, Title, _id, movieId, movie_id) => {
+                        {FavoriteMovies.map((_id, movie) => {
                             return (
                                 <Col key={_id} className='fav-movie'>
-                                    <Figure>
-                                        <Link to={`/movies/${movieId}`}>
-                                            <Figure.Image src={ImagePath} alt={Title} />
-                                            <Figure.Caption>{Title}</Figure.Caption>
-                                        </Link>
-                                    </Figure>
                                     <Button
-                                        className="remove"
-                                        onClick={() => { handleFavorite(movie_id, 'remove')
-                                    }}
+                                        className='remove'
+                                        variant='danger'
+                                        onClick={() =>  handleFavorite(movie._id, 'remove')
+                                    }
                                     >
                                         remove from favorites
                                     </Button>

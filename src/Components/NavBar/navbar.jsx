@@ -27,7 +27,7 @@ export function Menubar() {
 
     return (
 
-    <Navbar className='main-nav' collapseOnSelect bg='dark' expand='xxl' variant='dark'>
+    <Navbar className='main-nav' bg='dark' expand="lg" variant='dark' collapseOnSelect>
         <Container>
             <Navbar.Brand className='navbar-logo' href='/'>myFlix</Navbar.Brand>
             <Navbar.Toggle aria-controls='responsive-navbar-nav' />
