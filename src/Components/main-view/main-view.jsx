@@ -80,8 +80,8 @@ class MainView extends React.Component { //this generates the mainView component
         if (accessToken !== null && Username !== null) {
             // Add MovieID to Favorites (local state & webserver)
             if (action === 'add') {
-                this.setState({ FavoriteMovies: [...FavoriteMovies, movieId] });
-                axios.post(`https://top-flix.herokuapp.com/users/${Username}/favorites/${movieId}`,
+                
+                axios.post(`https://app-my-flix.herokuapp.com/users/${Username}/movies/${movieId}`,
                 {
                 headers: { Authorization: `Bearer ${accessToken}` },
                 }
@@ -95,10 +95,8 @@ class MainView extends React.Component { //this generates the mainView component
 
             // Remove MovieID from Favorites (local state & webserver)
             } else if (action === 'remove') {
-                this.setState({
-                    FavoriteMovies: FavoriteMovies.filter((id) => id !== movieId),
-                });
-                axios.delete(`https://top-flix.herokuapp.com/users/${Username}/favorites/${movieId}`,
+                
+                axios.delete(`https://app-my-flix.herokuapp.com/users/${Username}/movies/${movieId}`,
             {
                 headers: { Authorization: `Bearer ${accessToken}` },
             }

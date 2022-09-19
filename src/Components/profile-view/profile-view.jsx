@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Card, Col, Row, Container, Button, Form, Figure,  } from 'react-bootstrap';
 import CardHeader from 'react-bootstrap/esm/CardHeader';
+import { Link } from 'react-router-dom';
+
 
 // Import custom SCSS
 import './profile-view.scss';
@@ -138,7 +140,7 @@ import './profile-view.scss';
   }
 
     render () {
-    const { FavoriteMovies, Username, Password, Email, Birthday } = this.state;
+    const { FavoriteMovies, Username, Password, Email, Birthday, handleFavorite } = this.state;
 
     return (
         <Container>
@@ -256,22 +258,21 @@ import './profile-view.scss';
                         </Col>
                     </Row>
                     <Row>
-                        {FavoriteMovies.map((ImagePath, Title, _id) => {
+                        {FavoriteMovies.map((ImagePath, Title, _id, movieId, movie_id) => {
                             return (
-                                <Col key={m._id} className="fav-movie">
+                                <Col key={_id} className='fav-movie'>
                                     <Figure>
-                                        <Link to={`/movies/${movieID}`}>
+                                        <Link to={`/movies/${movieId}`}>
                                             <Figure.Image src={ImagePath} alt={Title} />
                                             <Figure.Caption>{Title}</Figure.Caption>
                                         </Link>
                                     </Figure>
-                                    <br />
                                     <Button
                                         className="remove"
-                                        variant="secondary"
-                                        onClick={() => removeFav(movie._id)}
+                                        onClick={() => { handleFavorite(movie_id, 'remove')
+                                    }}
                                     >
-                                         Remove from the list
+                                        remove from favorites
                                     </Button>
                                 </Col>
                             );

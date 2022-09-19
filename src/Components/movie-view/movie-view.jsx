@@ -7,7 +7,7 @@ import './movie-view.scss';
 export class MovieView extends React.Component {
 
     render () {
-        const { movie, onBackClick, } = this.props;
+        const { movie, onBackClick, handleFavorite } = this.props;
 
         return (
             <Card className="movie-view">
@@ -36,15 +36,15 @@ export class MovieView extends React.Component {
                 <Card.Footer>
                     {/*how to implement the add to favorites button button?*/} 
                     <Button
-                        className="movie-view-favorite-button"
+                        className='movie-view-favorite-button'
                         onClick={() => {
-                        /*which function here?()*/;
+                            handleFavorite(movie._id, 'add')
                         }}
                     >
-                        + to favorites
+                        ❤️
                     </Button>
                     <Button
-                        className="movie-view-back-button"
+                        className='movie-view-back-button'
                         onClick={() => {
                         onBackClick();
                         }}
