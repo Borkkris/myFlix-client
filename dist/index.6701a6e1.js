@@ -46719,6 +46719,7 @@ class MovieView extends _reactDefault.default.Component {
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card.Img, {
                         variant: "top",
+                        crossOrigin: "anonymous",
                         src: movie.ImagePath,
                         __source: {
                             fileName: "src/Components/movie-view/movie-view.jsx",

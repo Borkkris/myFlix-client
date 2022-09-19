@@ -9,7 +9,9 @@
 .delete-button {
   margin-left: 10px;
 }
-
+body {
+  background-color: e16fce;
+}
 .my-flix {
   color: #e16fce;
 }
