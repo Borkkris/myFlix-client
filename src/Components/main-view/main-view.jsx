@@ -29,7 +29,8 @@ class MainView extends React.Component { //this generates the mainView component
         super(); //initializes your component’s state + mendatory when using constructor function + will call the parent React.Component’s constructor, which will give my class the actual React component’s features
        
         this.state = {
-            user: null //The user property is initialized to null in the state (default is logged out). When the app is first run or when a user has logged out, there is no user that is logged in, hence setting the user to null.
+            user: null, //The user property is initialized to null in the state (default is logged out). When the app is first run or when a user has logged out, there is no user that is logged in, hence setting the user to null.
+            userObj: null,
         }; 
     }
 
@@ -37,10 +38,12 @@ class MainView extends React.Component { //this generates the mainView component
     componentDidMount(){
         let accessToken = localStorage.getItem('token'); //  et the value of the token from localStorage
         if (accessToken !== null) {
+            const user = localStorage.getItem('user');
             this.setState({
-                user:localStorage.getItem('user')
+                user
             });
             this.getMovies(accessToken);
+            this.getUser(user, accessToken);
         }
     }
 
@@ -56,20 +59,35 @@ class MainView extends React.Component { //this generates the mainView component
         });
     }
 
+    getUser(username, token) {
+        axios.get(`https://app-my-flix.herokuapp.com/users/${username}`, {
+            headers: { Authorization: `Bearer ${token}`} // By passing bearer authorization in the header of your HTTP requests, you can make authenticated requests to your API
+        })
+        .then((response) => {
+            // this.props.setUser(response.data); // parses the repsonse into setMovies
+            this.setState({userObj: response.data});
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
     handleFavorite = (movieId, action) => {
-        const { username, favoriteMovies } = this.state;
+        console.log(this.state)
+        const { Username, FavoriteMovies } = this.state.userObj;
+        console.log(Username, FavoriteMovies)
         const accessToken = localStorage.getItem('token');
-        if (accessToken !== null && username !== null) {
+        if (accessToken !== null && Username !== null) {
             // Add MovieID to Favorites (local state & webserver)
             if (action === 'add') {
-                this.setState({ favoriteMovies: [...favoriteMovies, movieId] });
-                axios.post(`https://top-flix.herokuapp.com/users/${username}/favorites/${movieId}`,
+                this.setState({ FavoriteMovies: [...FavoriteMovies, movieId] });
+                axios.post(`https://top-flix.herokuapp.com/users/${Username}/favorites/${movieId}`,
                 {
                 headers: { Authorization: `Bearer ${accessToken}` },
                 }
                 )
             .then((res) => {
-                console.log(`Movie added to ${username} Favorite movies`);
+                console.log(`Movie added to ${Username} Favorite movies`);
             })
             .catch((err) => {
                 console.log(err);
@@ -78,15 +96,15 @@ class MainView extends React.Component { //this generates the mainView component
             // Remove MovieID from Favorites (local state & webserver)
             } else if (action === 'remove') {
                 this.setState({
-                    favoriteMovies: favoriteMovies.filter((id) => id !== movieId),
+                    FavoriteMovies: FavoriteMovies.filter((id) => id !== movieId),
                 });
-                axios.delete(`https://top-flix.herokuapp.com/users/${username}/favorites/${movieId}`,
+                axios.delete(`https://top-flix.herokuapp.com/users/${Username}/favorites/${movieId}`,
             {
                 headers: { Authorization: `Bearer ${accessToken}` },
             }
                 )
             .then((res) => {
-                console.log(`Movie removed from ${username} Favorite movies`);
+                console.log(`Movie removed from ${Username} Favorite movies`);
             })
             .catch((err) => {
                 console.log(err);
@@ -163,7 +181,7 @@ class MainView extends React.Component { //this generates the mainView component
                                     </Col>
                                     if (movies.length === 0) return <div className = 'main-view' />;
                                 return <Col md={8}>
-                                    <MovieView movie={movies.find(m => m._id === match.params.id)} onBackClick={() => history.goBack()} />
+                                    <MovieView movie={movies.find(m => m._id === match.params.id)} handleFavorite={this.handleFavorite} onBackClick={() => history.goBack()} />
                                 </Col>
                             }} />
 
