@@ -1,81 +1,224 @@
 import React from 'react';// imports react into the file. Its important for creating components
+import { BrowserRouter as Router, Route, Redirect  } from 'react-router-dom'; // react-router library for routing / BrowserRouter for state-based-routing
 import axios from 'axios';// imports axios into the file. Its important to do Ajax requests
+import { Container, Col, Row } from 'react-bootstrap';
+import { connect } from 'react-redux'; // use connect to import connect-function from react-redux to connect any stateful-component of the app to the store
+
 
 
 //importing component MovieCard, MovieView...
-import { RegistrationView } from '../registration-view/registration-view';
-import { LoginView } from '..//login-view/login-view';
-import { MovieCard } from '../movie-card/movie-card';
+import { Menubar } from '../NavBar/navbar';
+import { LoginView } from '../login-view/login-view';
 import { MovieView } from '../movie-view/movie-view';
+import { GenreView } from '../genre-view/genre-view';
+import { DirectorView } from '../director-view/director-view';
+import { RegistrationView } from '../registration-view/registration-view';
+import { ProfileView } from '../profile-view/profile-view';
+import { setMovies } from '../../actions/actions';
+
+// this one must be still written
+import MoviesList from '../movies-list/movies-list';
+
+import './main-view.scss';
+
 
 // export makes the ne component usable by others
-export class MainView extends React.Component { //this generates the mainView component
+class MainView extends React.Component { //this generates the mainView component
+    
     constructor(){ //The method that React uses to actually create the component in-memory + starting point of any class component
         super(); //initializes your component’s state + mendatory when using constructor function + will call the parent React.Component’s constructor, which will give my class the actual React component’s features
+       
         this.state = {
-            movies: [],
-            selectedMovie: null,
             user: null //The user property is initialized to null in the state (default is logged out). When the app is first run or when a user has logged out, there is no user that is logged in, hence setting the user to null.
-        } 
+        }; 
     }
-    //GET all movies
+
     // code executed right after the component is added to the DOM.
     componentDidMount(){
-        axios.get('https://app-my-flix.herokuapp.com/movies')
-        .then(response => {
+        let accessToken = localStorage.getItem('token'); //  et the value of the token from localStorage
+        if (accessToken !== null) {
             this.setState({
-            movies: response.data
+                user:localStorage.getItem('user')
             });
+            this.getMovies(accessToken);
+        }
+    }
+
+    getMovies(token) {
+        axios.get('https://app-my-flix.herokuapp.com/movies', {
+            headers: { Authorization: `Bearer ${token}`} // By passing bearer authorization in the header of your HTTP requests, you can make authenticated requests to your API
         })
-        .catch(error => {
-        console.log(error);
+        .then((response) => {
+            this.props.setMovies(response.data); // parses the repsonse into setMovies
+        })
+        .catch(function (error) {
+            console.log(error);
         });
     }
 
-    /*When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
-    setSelectedMovie(newSelectedMovie) {
+    handleFavorite = (movieId, action) => {
+        const { username, favoriteMovies } = this.state;
+        const accessToken = localStorage.getItem('token');
+        if (accessToken !== null && username !== null) {
+            // Add MovieID to Favorites (local state & webserver)
+            if (action === 'add') {
+                this.setState({ favoriteMovies: [...favoriteMovies, movieId] });
+                axios.post(`https://top-flix.herokuapp.com/users/${username}/favorites/${movieId}`,
+                {
+                headers: { Authorization: `Bearer ${accessToken}` },
+                }
+                )
+            .then((res) => {
+                console.log(`Movie added to ${username} Favorite movies`);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+            // Remove MovieID from Favorites (local state & webserver)
+            } else if (action === 'remove') {
+                this.setState({
+                    favoriteMovies: favoriteMovies.filter((id) => id !== movieId),
+                });
+                axios.delete(`https://top-flix.herokuapp.com/users/${username}/favorites/${movieId}`,
+            {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            }
+                )
+            .then((res) => {
+                console.log(`Movie removed from ${username} Favorite movies`);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+            } 
+        }
+    };
+
+     onLoggedIn(authData) { // When a user logs in, the props onLoggedIn(data) is passed to the LoginView and triggers the function onLoggedIn(authData) in the MainView. This updates the state with the logged in authData.
+        console.log(authData); // authData sent to the console
         this.setState({
-            selectedMovie: newSelectedMovie
+            user:authData.user.Username, // users Username is saved in the user state
         });
+        /*The auth information received from the handleSubmit method, 
+        the token and the user, is saved in localStorage*/
+        localStorage.setItem('token', authData.token);
+        localStorage.setItem('user', authData.user.Username);
+        /*this.getMovies(authData) is called and gets the
+         movies from your API once the user is logged in*/
+        this.getMovies(authData.token);
     }
-
-    //When a user successfully registers
-    onRegistration(register) {
+   
+    onLoggedOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.setState({
-      register,
+      user: null,
     });
+    window.open('/', '_self');
   }
-    /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
-    /*This method will update the user state of the MainView component and will be called when the user has successfully logged in*/
-    onLoggedIn(user) {
-        this.setState({
-            user
-        })
-    }
 
     // controls what the component displays or visual representation of the component
     render() {
-        const { movies, selectedMovie, user, register} = this.state;
-
-        if (!register) return <RegistrationView onRegistration={register => this.onRegistration(register)} />
-
-        /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
-        if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-
-        if (movies.length === 0) return <div className="main-view">loading...</div>;
+        let { movies } = this.props; // now this has the movies because movies are passed into props via mapStateToProps function
+        let { user } = this.state;
+        let { favoriteMovies } = this.state;
+        
 
         return (
-            <div className="main-view">
-                {/*If the state of `selectedMovie` is not null, that selected movie will be returned otherwise, all *movies will be returned*/}
-                {selectedMovie
-                ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }}/>
-                : movies.map(movie => (
-                    <MovieCard key={movie._id} movie={movie} onMovieClick={(newSelectedMovie) => { this.setSelectedMovie(newSelectedMovie) }}/>
-                ))
-                }
-            </div>
+            <Router> {/* to create routes */}
+                <Menubar user={user} />
+                <Container>
+                    <Row className='main-view justify-content-md-center'> 
+
+                            {/* route for link on main-view to login-view */}    
+                            <Route  exact path='/' render={() => {
+                                // if there is no user, the LoginView is rendered. If there is a user logged in, the user details are passed as a prop to the loginView
+                                if (!user) 
+                                    return ( 
+                                        <Col>
+                                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                                        </Col>
+                                    );
+
+                                // Before the movies have been loaded
+                                if (movies.length === 0) 
+                                    return <div className='main-view' />
+                                    return <MoviesList movies={movies}/>;
+                            }} />
+
+                            {/* route for link on main-view to registration-view */}
+                            <Route path='/register' render={() => {
+                                if (user) return <Redirect to='/' />
+                                return <Col>
+                                    <RegistrationView />
+                                </Col>
+                            }} />
+
+                            {/* route for link on main-view to movie-view */}
+                            <Route path='/movies/:id' render={({ match, history }) => {
+                                if (!user) 
+                                    return <Col>
+                                        <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                                    </Col>
+                                    if (movies.length === 0) return <div className = 'main-view' />;
+                                return <Col md={8}>
+                                    <MovieView movie={movies.find(m => m._id === match.params.id)} onBackClick={() => history.goBack()} />
+                                </Col>
+                            }} />
+
+                            {/* route for link on main-view to director-view */}
+                            <Route path='/directors/:name' render={({ match, history }) => {
+                                if (!user) 
+                                    return <Col>
+                                        <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                                    </Col>
+                                if (movies.length === 0) return <div className = 'main-view' />;
+                                return <Col md={8}>
+                                    <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} /> {/* loop through the movies array (using the find() method) and compare the director’s name from your database*/}
+                                </Col>
+                            }} />
+
+                            {/* route for link on main-view to genre-view */}
+                            <Route path='/genres/:name' render={({ match, history }) => {
+                                if (!user) 
+                                    return <Col>
+                                        <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                                    </Col>
+                                if (movies.length === 0) return <div className = 'main-view' />;
+                                return <Col md={8}>
+                                    <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} /> {/* loop through the movies array (using the find() method) and compare the director’s name from your database*/}
+                                </Col>
+                            }} />
+
+                            {/* route for link on main-view to profile-view */}
+                            <Route path={`/users/${user}`} render={({history}) => {
+                                if (!user) return <Redirect to='/' />
+                                return <Col>
+                                    <ProfileView 
+                                    user={user} 
+                                    onBackClick={() => history.goBack()}
+                                    favoriteMovies={favoriteMovies || []}
+                                    handleFavorite={this.handleFavorite}
+                                    movies={movies}
+                                    />
+                                </Col>
+                            }} />     
+                    </Row>
+                </Container>
+            </Router>
         );
     }
 }
 
-export default MainView; // default used to get rid of the curly braces (also in import)
+
+let mapStateToProps = state => { 
+    return { movies: state.movies }
+}
+// mapStateToProps is a function that—if defined—will allow the component (the one you want to connect) to subscribe to store updates. 
+// Any time the store is updated, this function will be called.
+
+// the output is the setMovies action / component is MainView / Connecting this component to an action allows you to receive the actual action as a prop.
+// connect() is central to React Redux - > it means:  wrap any stateful component to connect it to a store
+// setMovies is given as a prop to your MainView component because it’s wrapped in the connect() function.
+export default connect(mapStateToProps, { setMovies } )(MainView) // default used to get rid of the curly braces (also in import)
