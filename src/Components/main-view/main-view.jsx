@@ -20,6 +20,7 @@ import { setMovies } from '../../actions/actions';
 import MoviesList from '../movies-list/movies-list';
 
 import './main-view.scss';
+import t from 'email-prop-type';
 
 
 // export makes the ne component usable by others
@@ -67,13 +68,15 @@ class MainView extends React.Component { //this generates the mainView component
         .then((response) => {
             // this.props.setUser(response.data); // parses the repsonse into setMovies
             this.setState({userObj: response.data});
+            const favMoviesObj = this.props.movies.filter(m => response.data.FavoriteMovies.includes(m._id));
+            this.setState({favoriteMovies:favMoviesObj})
         })
         .catch(function (error) {
             console.log(error);
         });
     }
 
-    handleFavorite = (movieId, action) => {
+    handleFavorite = (movie, action) => {
         console.log(this.state)
         const { Username, FavoriteMovies } = this.state.userObj;
         console.log(Username, FavoriteMovies)
@@ -81,14 +84,16 @@ class MainView extends React.Component { //this generates the mainView component
         if (accessToken !== null && Username !== null) {
             // Add MovieID to Favorites (local state & webserver)
             if (action === 'add') {
-
-                axios.post(`https://app-my-flix.herokuapp.com/users/${Username}/movies/${movieId}`,
-                {
-                headers: { Authorization: `Bearer ${accessToken}` },
-                }
+                axios.post(`https://app-my-flix.herokuapp.com/users/${Username}/movies/${movie._id}`, {},
+                    {
+                    headers: { Authorization: `Bearer ${accessToken}` },
+                    }
                 )
             .then((res) => {
-                console.log(`Movie added to ${Username} Favorite movies`);
+                alert(`Movie added to ${Username} Favorite movies`);
+                this.setState({
+                    favoriteMovies: [...this.state.favoriteMovies, movie]
+                })
             })
             .catch((err) => {
                 console.log(err);
@@ -96,14 +101,20 @@ class MainView extends React.Component { //this generates the mainView component
 
             // Remove MovieID from Favorites (local state & webserver)
             } else if (action === 'remove') {
-                
-                axios.delete(`https://app-my-flix.herokuapp.com/users/${Username}/movies/${movieId}`,
+                axios.delete(`https://app-my-flix.herokuapp.com/users/${Username}/movies/${movie._id}`,
             {
                 headers: { Authorization: `Bearer ${accessToken}` },
             }
                 )
             .then((res) => {
-                console.log(`Movie removed from ${Username} favorite movies`);
+                alert(`Movie removed from ${Username} favorite movies`);
+                const favMovies = this.state.favoriteMovies;
+                console.log("favMovies before splice", favMovies)
+                favMovies.splice(favMovies.findIndex(fm => fm._id === movie._id), 1);
+                console.log("favMovies after splice", favMovies)
+                this.setState({
+                    favoriteMovies: [...favMovies]
+                })
             })
             .catch((err) => {
                 console.log(err);

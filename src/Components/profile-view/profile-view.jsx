@@ -140,7 +140,8 @@ import './profile-view.scss';
   }
 
     render () {
-    const { FavoriteMovies, Username, Password, Email, Birthday, handleFavorite } = this.state;
+    const { FavoriteMovies, Username, Password, Email, Birthday } = this.state
+    const favMoviesObj = this.props.favoriteMovies;
 
     return (
         <Container>
@@ -250,31 +251,33 @@ import './profile-view.scss';
                     </Card>
                 </Col>
             </Row>
-            <Card className='favmov-inputs'>
-                <Card.Body>
-                    <Row>
+            <Row>
                         <Col xs={12}>
                             <h4>Favorite Movies</h4>
                         </Col>
                     </Row>
                     <Row>
-                        {FavoriteMovies.map((_id, movie) => {
+                        {favMoviesObj.map((fm) => {
                             return (
-                                <Col key={_id} className='fav-movie'>
-                                    <Button
-                                        className='remove'
-                                        variant='danger'
-                                        onClick={() =>  handleFavorite(movie._id, 'remove')
-                                    }
-                                    >
-                                        remove from favorites
-                                    </Button>
+                                <Col key={fm._id} className='fav-movie'>
+                                    <Card className='favmov-inputs'>
+                                        <Card.Img variant='top' crossOrigin='anonymous' src={fm.ImagePath} />
+                                        <Card.Body>
+                                            <Card.Title>{fm.Title}</Card.Title>
+                                            <Button
+                                                className='remove'
+                                                variant='danger'
+                                                onClick={() =>  this.props.handleFavorite(fm, 'remove')
+                                            }
+                                            >
+                                                remove from favorites
+                                            </Button>
+                                        </Card.Body>
+                                    </Card>
                                 </Col>
                             );
                         })}
                     </Row>
-                </Card.Body>
-            </Card>
         </Container>
     );
     }

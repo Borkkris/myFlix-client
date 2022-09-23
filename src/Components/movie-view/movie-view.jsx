@@ -38,7 +38,7 @@ export class MovieView extends React.Component {
                         className='movie-view-favorite-button rounded-circle'
                         variant="light"
                         onClick={() => {
-                            handleFavorite(movie._id, 'add')
+                            handleFavorite(movie, 'add')
                         }}
                     >
                         🖤
