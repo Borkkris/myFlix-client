@@ -41,7 +41,7 @@ export class MovieView extends React.Component {
                             handleFavorite(movie._id, 'add')
                         }}
                     >
-                        ❤️
+                        🖤
                     </Button>
                     <Button
                         className='movie-view-back-button'
