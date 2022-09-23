@@ -11,7 +11,7 @@ export class MovieCard extends React.Component {
         
         // card that displays your movie’s image, title, and description, along with a button to open the card
         return ( 
-            <Card  border="light" className='h-100'>
+            <Card  border="light">
                 <Card.Img variant='top' crossOrigin='anonymous' src={movie.ImagePath} />
                 <Card.Body className = 'cardBody'>
                     <Card.Title>{movie.Title}</Card.Title>

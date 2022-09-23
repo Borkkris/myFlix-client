@@ -11,6 +11,10 @@
 
 
 
+.col-md-3 {
+  padding: 10px;
+}
+
 .cardBody {
   background-color: #dbb4cc;
   text-align: center;

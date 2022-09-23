@@ -48146,7 +48146,6 @@ class MovieCard extends _reactDefault.default.Component {
         // card that displays your movie’s image, title, and description, along with a button to open the card
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card, {
             border: "light",
-            className: "h-100",
             __source: {
                 fileName: "src/Components/movie-card/movie-card.jsx",
                 lineNumber: 14
