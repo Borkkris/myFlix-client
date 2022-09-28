@@ -37,6 +37,12 @@ It interfaces with a Webserver API called myFlixDB which was built with Node.js,
 ![Screenshot registration](src/screenshots/registration-form.png "Screenshot registration-form")
 ![Screenshot profile-view](src/screenshots/User-profile.png "Screenshot User-profile")
 
+### Mobile-Version:
+![Screenshot login](src/screenshots/mobile_login-form.png "Screenshot Login-Form")
+![Screenshot movie-cards](src/screenshots/mobile_movie-list.png "Screenshot movie-list")
+![Screenshot registration](src/screenshots/mobile_registration.png "Screenshot registration-form")
+![Screenshot profile-view](src/screenshots/mobile_User-profile.png "Screenshot User-profile")
+
 ## Deployed on Netlify.com: 
 <a href="https://app-my-flix.netlify.app">MyFlixApp</a>
 
