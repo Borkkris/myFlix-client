@@ -39,8 +39,6 @@ It interfaces with a Webserver API called myFlixDB which was built with Node.js,
 
 ## Deployed on Netlify.com: 
 <a href="https://app-my-flix.netlify.app">MyFlixApp</a>
-## Deployed on Netlify.com: 
-<a href="https://app-my-flix.netlify.app">MyFlixApp</a>
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
