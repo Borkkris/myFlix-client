@@ -1,7 +1,7 @@
 # myFlix-client
 
 This is the client side of the myFlix app.
-The myFlix app is a Movie library.
+The myFlix app is a Movie library where you can seacr hfor movies and add the movies you like to your favorite movie list.
 
 ## Framework:
 * React
@@ -37,6 +37,8 @@ It interfaces with a Webserver API called myFlixDB which was built with Node.js,
 ![Screenshot registration](src/screenshots/registration-form.png "Screenshot registration-form")
 ![Screenshot profile-view](src/screenshots/User-profile.png "Screenshot User-profile")
 
+## Deployed on Netlify.com: 
+<a href="https://app-my-flix.netlify.app">MyFlixApp</a>
 ## Deployed on Netlify.com: 
 <a href="https://app-my-flix.netlify.app">MyFlixApp</a>
 
