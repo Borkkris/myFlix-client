@@ -185,6 +185,7 @@ import './profile-view.scss';
                                             name="Username"
                                             placeholder="New Username"
                                             onChange={(e) => this.setUsername(e.target.value)}
+                                            value={Username}
                                             required
                                         />
                                         </Form.Group>
@@ -197,7 +198,7 @@ import './profile-view.scss';
                                             type="password"
                                             name="Password"
                                             placeholder="New Password"
-                                            onChange={(e) => this.setPassword(e.target.value)}
+                                            onChange={(e) => this.setPassword(e.target.value)}                                        
                                             required
                                         />
                                         </Form.Group>
@@ -211,6 +212,7 @@ import './profile-view.scss';
                                             name="Email"
                                             placeholder="New Email"
                                             onChange={(e) => this.setEmail(e.target.value)}
+                                            value={Email}
                                             required
                                         />
                                         </Form.Group>
