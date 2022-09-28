@@ -1,7 +1,7 @@
 # myFlix-client
 
 This is the client side of the myFlix app.
-The myFlix app is a Movie library.
+The myFlix app is a Movie library where you can seacr hfor movies and add the movies you like to your favorite movie list.
 
 ## Framework:
 * React
