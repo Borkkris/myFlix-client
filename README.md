@@ -30,7 +30,8 @@ It interfaces with a Webserver API called myFlixDB which was built with Node.js,
 * add/delete movies to/from a list of favorite movies
 * Sort movies by fields like genre or director
 
-Link coming soon.
+Deployed on Netlify.com: 
+<a href="https://app-my-flix.netlify.app">MyFlixApp</a>
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
